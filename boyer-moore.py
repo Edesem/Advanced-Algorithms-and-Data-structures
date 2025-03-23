@@ -76,12 +76,23 @@ def z_suffix(s):
                 r = j - 1 
 
     return z[::-1] 
+
+def good_suffix(s):
+    z = z_suffix(s)
+
+    m = len(s) + 1
+    gs = [0] * m
+    
+    for i in range(0,m-2):
+        gs[m - z[i] - 1] = i
         
+    return gs
+    
 def bm(s):
     """
     Find R(x)
     """
-    print(z_suffix(s))
+    print(good_suffix(s))
 
 
 s1="acababacaba"
