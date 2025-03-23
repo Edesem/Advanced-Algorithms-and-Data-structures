@@ -1,4 +1,4 @@
-def z(str):
+def z(s):
     """
     3 Cases
 
@@ -6,7 +6,7 @@ def z(str):
 
     1. i > r
         - i > r means i is outside the current z-box
-        - So we have to start from scratch and compare str[0:] with str[i:]
+        - So we have to start from scratch and compare s[0:] with s[i:]
 
     2. i <= r
         - i <= r means i is inside the current z-box
@@ -18,20 +18,20 @@ def z(str):
         2b. z[k] >= r - l
             - case when you have to compare characters one by one
             - j = r + 1
-            - start comparing outside of the z-box str[j] with str[j-i] until a mismatch occurs
+            - start comparing outside of the z-box s[j] with s[j-i] until a mismatch occurs
             - say mismatch happens at m
             - set Z[i] = m - i
             - set l = i
             - set r = m - 1
     """
-    n = len(str)
+    n = len(s)
     z = [0] * n
     l = r = 0
     found = False
 
     # Base Case: compute Z[1] from scratch (in 0-based, that's i=1)
     i = 1
-    while i < n and str[i] == str[i-1]:
+    while i < n and s[i] == s[i-1]:
         z[i] += 1
         i += 1
     if z[1] > 0:
@@ -45,7 +45,7 @@ def z(str):
             
             # j is prefix
             j = 0
-            while i + j < n and str[j] == str[i+j]:
+            while i + j < n and s[j] == s[i+j]:
                 j += 1
             z[i] = j
             if j > 0:
@@ -65,12 +65,12 @@ def z(str):
             # 2b: Naive Approach outside Z-box
             else:
                 j = r + 1
-                while j < n and str[j] == str[j-i]:
+                while j < n and s[j] == s[j-i]:
                     j += 1
                 z[i] = j - i
                 l = i
                 r = j - 1 
-                #print("case 2b:", j, i, str[j-i], str[j-1])
+                #print("case 2b:", j, i, s[j-i], s[j-1])
 
         #print(l, r, i)
         #print(z)
@@ -78,10 +78,10 @@ def z(str):
 
     print("Final:", z)
 
-str = "abababa"
-str1 = "aabcaabxaaaz"
-str2 = "aabzaabzcaabzaabza"
-str3 = "aabb#abcdeaabbdfaabdfg"
+s = "abababa"
+s1 = "aabcaabxaaaz"
+s2 = "aabzaabzcaabzaabza"
+s3 = "aabb#abcdeaabbdfaabdfg"
 
-z(str2)
+z(s5)
 
