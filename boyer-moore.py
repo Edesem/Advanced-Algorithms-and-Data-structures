@@ -141,14 +141,17 @@ def good_suffix(s):
 def matched_prefix(s):
     m = len(s)
     z = z_algo(s) 
+    print(z)
     mp = [0] * (m + 1)
-    mp[0] = m
 
     max_z = 0
     for i in reversed(range(1, m + 1)):
+        print(i, i-1, z[i - 1], m - i + 1)
         if z[i - 1] == m - i + 1:
             max_z = max(max_z, z[i - 1])
-        mp[i] = max_z
+        mp[i - 1] = max_z
+
+    mp[0] = m
 
     return mp
     
