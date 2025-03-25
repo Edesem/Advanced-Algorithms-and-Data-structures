@@ -18,7 +18,6 @@ def extended_bad_char(s):
     for i in range(1, n):
         suffix = s[:i]
         char = suffix[i - 1]
-        print(suffix)
 
         if hash[char][i - 1] < n - i:
             hash[char][i - 1] = i - 1
@@ -27,7 +26,6 @@ def extended_bad_char(s):
 
 def z_suffix(s):
     s = s[::-1]
-    print(s)
     
     n = len(s)
     z = [0] * n
@@ -141,12 +139,10 @@ def good_suffix(s):
 def matched_prefix(s):
     m = len(s)
     z = z_algo(s) 
-    print(z)
     mp = [0] * (m + 1)
 
     max_z = 0
     for i in reversed(range(1, m + 1)):
-        print(i, i-1, z[i - 1], m - i + 1)
         if z[i - 1] == m - i + 1:
             max_z = max(max_z, z[i - 1])
         mp[i - 1] = max_z
@@ -159,10 +155,19 @@ def bm(s):
     """
     Find R(x)
     """
-    print(matched_prefix(s))
+    b_c = bad_char(s)
+    e_b_c = extended_bad_char(s)
+    g_s = good_suffix(s)
+    m_p = matched_prefix(s)
+    
+    print(b_c)
+    for i in e_b_c:
+        print(i, e_b_c[i])    
+    print(g_s)
+    print(m_p)
 
 
 s1="acababacaba"
 s2="tbapxab"
 
-bm(s1)
+bm(s2)
