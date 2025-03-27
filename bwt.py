@@ -1,8 +1,15 @@
 def bwt(s):
-    print(s)
+    bwt = []
+    
+    bwt.append(s)
     for i in range(1, len(s)):
-        print(s[-i:] + s[:-i])
+        bwt.append(s[-i:] + s[:-i])
+
+    return bwt
 
 s1 = "wooloomooloo"
 
-bwt(s1)
+bwt_a = bwt(s1)
+
+for i in bwt_a:
+    print(i)
