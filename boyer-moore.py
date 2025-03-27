@@ -164,11 +164,13 @@ def bm(s, p):
     j = 1
     while i <= len(s):
         print(s[-i])
+        print("Index:",i)
         if s[-i] != p[-j]:  # Mismatch occurs
             mismatch_char = s[-i]
 
             nbadcharacter = max(1, i - b_c[mismatch_char])
             ngoodshift = g_s[j]
+            print("Bad Character:", nbadcharacter, "Good Shift:", ngoodshift)
             i += max(nbadcharacter, ngoodshift)
             j = 1
             print("mismatch")
@@ -177,14 +179,14 @@ def bm(s, p):
             j += 1
             print("continue")
             if j == len(p) + 1:
-                print("found")
-                i += m_p[0]
+                print("Pattern found at index", (len(s) +1) - i)
+                j = 0
 
 
 
 s1="acababacaba"
-s2="ABAAABCD"
+s2="AABAACAADAABAABA"
 
-pat="ABC"
+pat="acab"
 
-bm(s2, pat)
+bm(s1, pat)
