@@ -151,9 +151,9 @@ def bm(s, p):
     """
     Find R(x)
     """
-    b_c = bad_char(s)
-    e_b_c = extended_bad_char(s)
-    g_s, m_p = good_suffix(s)
+    b_c = bad_char(p)
+    e_b_c = extended_bad_char(p)
+    g_s, m_p = good_suffix(p)
     
     print(b_c)
     for i in e_b_c:
@@ -170,6 +170,7 @@ def bm(s, p):
 
             nbadcharacter = max(1, i - b_c[mismatch_char])
             ngoodshift = g_s[j]
+            print("Mismatch Char:", i - b_c[mismatch_char])
             print("Bad Character:", nbadcharacter, "Good Shift:", ngoodshift)
             i += max(nbadcharacter, ngoodshift)
             j = 1
@@ -187,6 +188,7 @@ def bm(s, p):
 s1="acababacaba"
 s2="AABAACAADAABAABA"
 
-pat="acab"
+pat1="acab"
+pat2="AABA"
 
-bm(s1, pat)
+bm(s1, pat1)
