@@ -169,25 +169,37 @@ def bm(s, p):
         # Index the last character for pattern
         j = m - 1
 
-        print(i, j)
+        print()
+        print("INDEX:",i, j)
+        print("COMPARE:", s[i+j], p[j])
+
         # compare characters from right to left
         while j >= 0 and p[j] == s[i+j]:
             j -= 1
+            print()
+            print("COMPARE:", s[i+j], p[j])
             print("crawling", i, j)
+
+        print()
+        print("COMPARE:", s[i+j], p[j])
 
         # If pattern is found
         if j == -1:
             print("Pattern found at index", i)
             char = s[i+j]
             bad_char_shift = b_c[char]
-            i = i + max(j - bad_char_shift, g_s[j])
+            print("shift", bad_char_shift, g_s[j])
+            if i + m < n:
+                i += max(1, bad_char_shift, g_s[j])
+            else:
+                i += 1
 
         else:
             print("no match")
             char = s[i+j]
             bad_char_shift = b_c[char]
-            print("bad char shift", j -bad_char_shift)
-            i = i + max(j - bad_char_shift, g_s[j])
+            print("shift", bad_char_shift, g_s[j])
+            i = i + max(1, bad_char_shift, g_s[j])
 
 s1="acababacaba"
 s2="AABAACAADAABAABA"
