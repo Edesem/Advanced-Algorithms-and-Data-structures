@@ -171,7 +171,8 @@ def bm(s, p):
     while i <= len(s):
         if s[-i] != p[-j]:  # Mismatch occurs
             mismatch_char = s[-i]
-            
+            g_s[-j]
+            m_p[-i]
             
             shift = max(1, i - b_c[mismatch_char])
             i += shift  # Increment i by the shift amount
