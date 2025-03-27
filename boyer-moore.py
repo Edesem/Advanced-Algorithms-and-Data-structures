@@ -151,6 +151,9 @@ def bm(s, p):
     """
     Find R(x)
     """
+    n = len(s)
+    m = len(p)
+
     b_c = bad_char(p)
     e_b_c = extended_bad_char(p)
     g_s, m_p = good_suffix(p)
@@ -160,30 +163,31 @@ def bm(s, p):
         print(i, e_b_c[i])    
     print(g_s, m_p)
 
-    i = 1  # Start from the last character
-    j = 1
-    while i <= len(s):
-        print(s[-i])
-        print("Index:",i)
-        if s[-i] != p[-j]:  # Mismatch occurs
-            mismatch_char = s[-i]
+    i = 0
+    # While loop so that pattern doesn't overflow the text
+    while i <= n-m:
+        # Index the last character for pattern
+        j = m - 1
 
-            nbadcharacter = max(1, i - b_c[mismatch_char])
-            ngoodshift = g_s[j]
-            print("Mismatch Char:", i - b_c[mismatch_char])
-            print("Bad Character:", nbadcharacter, "Good Shift:", ngoodshift)
-            i += max(nbadcharacter, ngoodshift)
-            j = 1
-            print("mismatch")
+        print(i, j)
+        # compare characters from right to left
+        while j >= 0 and p[j] == s[i+j]:
+            j -= 1
+            print("crawling", i, j)
+
+        # If pattern is found
+        if j == -1:
+            print("Pattern found at index", i)
+            char = s[i+j]
+            bad_char_shift = b_c[char]
+            i = i + max(j - bad_char_shift, g_s[j])
+
         else:
-            i += 1  # Continue checking next character normally
-            j += 1
-            print("continue")
-            if j == len(p) + 1:
-                print("Pattern found at index", (len(s) +1) - i)
-                j = 0
-
-
+            print("no match")
+            char = s[i+j]
+            bad_char_shift = b_c[char]
+            print("bad char shift", j -bad_char_shift)
+            i = i + max(j - bad_char_shift, g_s[j])
 
 s1="acababacaba"
 s2="AABAACAADAABAABA"
