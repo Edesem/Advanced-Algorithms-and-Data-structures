@@ -34,8 +34,6 @@ def bwt_invert(bwt):
     #k = bwt_key(bwt)
     k = s2
 
-    print(char_rank(k))
-
     k = char_rank(k)
     #sorted_k = "".join(sorted(k))
     sorted_k = sorted(k, key=lambda x: x[0])  # Sort by rank (second element)
@@ -44,7 +42,9 @@ def bwt_invert(bwt):
         print(sorted_k[i], k[i])
 
     # Start at $
-    #for i in range(k):
+    for i in range(len(k)):
+        if k[i][0] == "$":
+            
         
     
 
