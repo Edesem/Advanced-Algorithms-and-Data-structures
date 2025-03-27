@@ -133,12 +133,8 @@ def good_suffix(s):
     
     for i in range(m-2):
         gs[m - z[i] - 1] = i
-        
-    return gs
 
-def matched_prefix(s):
     m = len(s)
-    z = z_algo(s) 
     mp = [0] * (m + 1)
 
     max_z = 0
@@ -148,8 +144,8 @@ def matched_prefix(s):
         mp[i - 1] = max_z
 
     mp[0] = m
-
-    return mp
+        
+    return gs, mp
     
 def bm(s, p):
     """
@@ -157,36 +153,38 @@ def bm(s, p):
     """
     b_c = bad_char(s)
     e_b_c = extended_bad_char(s)
-    g_s = good_suffix(s)
-    m_p = matched_prefix(s)
+    g_s, m_p = good_suffix(s)
     
     print(b_c)
     for i in e_b_c:
         print(i, e_b_c[i])    
-    print(g_s)
-    print(m_p)
+    print(g_s, m_p)
 
     i = 1  # Start from the last character
     j = 1
     while i <= len(s):
+        print(s[-i])
         if s[-i] != p[-j]:  # Mismatch occurs
             mismatch_char = s[-i]
-            g_s[-j]
-            m_p[-i]
-            
-            shift = max(1, i - b_c[mismatch_char])
-            i += shift  # Increment i by the shift amount
+
+            nbadcharacter = max(1, i - b_c[mismatch_char])
+            ngoodshift = g_s[j]
+            i += max(nbadcharacter, ngoodshift)
             j = 1
             print("mismatch")
         else:
             i += 1  # Continue checking next character normally
             j += 1
             print("continue")
+            if j == len(p) + 1:
+                print("found")
+                i += m_p[0]
+
 
 
 s1="acababacaba"
-s2="tbapxab"
+s2="ABAAABCD"
 
-pat="tb"
+pat="ABC"
 
 bm(s2, pat)
