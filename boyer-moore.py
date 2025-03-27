@@ -151,7 +151,7 @@ def matched_prefix(s):
 
     return mp
     
-def bm(s):
+def bm(s, p):
     """
     Find R(x)
     """
@@ -166,8 +166,26 @@ def bm(s):
     print(g_s)
     print(m_p)
 
+    i = 1  # Start from the last character
+    j = 1
+    while i <= len(s):
+        if s[-i] != p[-j]:  # Mismatch occurs
+            mismatch_char = s[-i]
+            
+            
+            shift = max(1, i - b_c[mismatch_char])
+            i += shift  # Increment i by the shift amount
+            j = 1
+            print("mismatch")
+        else:
+            i += 1  # Continue checking next character normally
+            j += 1
+            print("continue")
+
 
 s1="acababacaba"
 s2="tbapxab"
 
-bm(s2)
+pat="tb"
+
+bm(s2, pat)
