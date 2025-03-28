@@ -201,10 +201,11 @@ def bm(s, p):
             print("shift", bad_char_shift, g_s[j])
             # If char does not exist in the pattern, skip past it
             if bad_char_shift == 0:
-                i += m - 1
-            i += max(1, bad_char_shift, g_s[j])
+                i += m
+            else:
+                i += max(1, j - bad_char_shift, g_s[j])
 
-s1="acaxbabacaba"
+s1="acababacaba"
 s2="AABAACAADAABAABA"
 
 pat1="acab"
