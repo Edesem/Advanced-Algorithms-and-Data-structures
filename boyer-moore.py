@@ -171,7 +171,7 @@ def bm(s, p):
 
         print()
         print("INDEX:",i, j)
-        print("COMPARE:", s[i+j], p[j])
+        print("COMPARISON:", s[i+j], p[j])
 
         # compare characters from right to left
         while j >= 0 and p[j] == s[i+j]:
@@ -181,7 +181,7 @@ def bm(s, p):
             print("crawling", i, j)
 
         print()
-        print("COMPARE:", s[i+j], p[j])
+        print("COMPARING:", s[i+j], p[j])
 
         # If pattern is found
         if j == -1:
@@ -199,9 +199,12 @@ def bm(s, p):
             char = s[i+j]
             bad_char_shift = b_c[char]
             print("shift", bad_char_shift, g_s[j])
-            i = i + max(1, bad_char_shift, g_s[j])
+            # If char does not exist in the pattern, skip past it
+            if bad_char_shift == 0:
+                i += m - 1
+            i += max(1, bad_char_shift, g_s[j])
 
-s1="acababacaba"
+s1="acaxbabacaba"
 s2="AABAACAADAABAABA"
 
 pat1="acab"
