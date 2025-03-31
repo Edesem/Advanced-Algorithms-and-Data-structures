@@ -168,53 +168,64 @@ def bm(s, p):
     g_s, m_p = good_suffix(p)
     
     # Debugging info
-    """
-    print(b_c)
-    for i in e_b_c:
-        print("ebc",i, e_b_c[i])    
-    print(g_s, m_p)
-    """
+    print("Bad Character Table:", b_c)
+    print("Extended Bad Character Table:")
+    for char, shifts in e_b_c.items():
+        print(f"  {char}: {shifts}")
+    print("Good Suffix Table:", g_s)
+    print("Matched Prefix Table:", m_p)
 
     k = 0
     # While loop so that pattern doesn't overflow the text
     while k <= n-m:
+        print(f"\nChecking alignment at index {k}...")
         # Index the last character for pattern
         j = m - 1
 
         # compare characters from right to left
         while j >= 0 and p[j] == s[k+j]:
+            print(f"  Match at pattern[{j}] and text[{k+j}] ({p[j]} == {s[k+j]})")
             j -= 1
 
         # If pattern is found
         if j == -1:
-            print("Pattern found at index", k)
-
-            char = s[k+j]
-            bad_char_shift = b_c[char]
+            print(f"Pattern found at index {k}")
+            char = s[k+j] if k + j < n else None
+            bad_char_shift = b_c[char] if char else 0
 
             if k + m < n:
-                k += max(1, bad_char_shift, g_s[j])
+                shift = max(1, bad_char_shift, g_s[j])
+                print(f"  Shifting by {shift} (pattern found)")
+                k += shift
             else:
                 k += 1
 
         else:
             # Pattern not found, check for bad character
             char = s[k+j]
-
+            print(f"  Mismatch at pattern[{j}] and text[{k+j}] ({p[j]} != {s[k+j]})")
             bad_char_shift = b_c[char]
             extended_bad_char_shift = e_b_c[char][j-1]
 
+            # Clause to prevent negative shifts
+            if extended_bad_char_shift == -1:
+                extended_bad_char_shift = 0
+
             # If char does not exist in the pattern, skip past it
             if bad_char_shift == 0:
+                print(f"  Character '{char}' not in pattern. Shifting by {m}.")
                 k += m
             else:
-                k += max(1, j - bad_char_shift, j - extended_bad_char_shift, g_s[j])
+                shift = max(1, j - bad_char_shift, j - extended_bad_char_shift, g_s[j])
+                print(f"  Shifting by {shift} (bad_char_shift={bad_char_shift}, extended_bad_char_shift={extended_bad_char_shift}, good_suffix_shift={g_s[j]})")
+                k += shift
 
 s1="acababacaba"
 s2="AABAACAADAABAABA"
+s3="0011010101111001001101100"
 
 pat1="acab"
 pat2="AABA"
-pat3="acab"
+pat3="010"
 
-bm(s1, pat3)
+bm(s3, pat3)
