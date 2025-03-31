@@ -13,26 +13,25 @@ def bad_char(s):
 
 def extended_bad_char(s):
     """
-    Compute R_k(x) for each character x in pattern p.
-    Runs in O(|ℵ| m) time and space.
+    Compute R_k(x) for each character x in pattern s.
+    Runs in O(|Σ| m) time and space.
     """
     m = len(s)
-    alphabet = set(s)  # Extract unique characters from the pattern
-    R = {char: [-1] * m for char in alphabet}  # 2D Table (|Σ| × m), initialized to -1
+    alphabet = set(s)  # get alphabet
+    hash = defaultdict(lambda: [-1] * m)  
 
     # Fill table
-    for i in range(m):
-        char = s[i]
-        
+    for i in range(1, m):  # Start from 1, keeping R_k(x)=-1 for k=0
+        char = s[i - 1]  # Previous character (since suffix length is `i`)
+
         # Copy previous row values
         for c in alphabet:
-            if i > 0:
-                R[c][i] = R[c][i - 1]
+            hash[c][i] = hash[c][i - 1]  
 
         # Update current position for char
-        R[char][i] = i
+        hash[char][i] = i - 1  
 
-    return R
+    return hash
 
 """
 def extended_bad_char(s):
@@ -228,6 +227,7 @@ def bm(s, p):
             print("no match")
             char = s[k+j]
             bad_char_shift = b_c[char]
+            print("bad char", e_b_c[char][j])
             extended_bad_char_shift = e_b_c[char][j-1]
             print("ebc shift", extended_bad_char_shift, bad_char_shift, g_s[j])
             # If char does not exist in the pattern, skip past it
