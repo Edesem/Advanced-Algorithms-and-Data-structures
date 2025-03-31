@@ -12,17 +12,47 @@ def bad_char(s):
     return hash
 
 def extended_bad_char(s):
+    """
+    Compute R_k(x) for each character x in pattern p.
+    Runs in O(|ℵ| m) time and space.
+    """
+    m = len(s)
+    alphabet = set(s)  # Extract unique characters from the pattern
+    R = {char: [-1] * m for char in alphabet}  # 2D Table (|Σ| × m), initialized to -1
+
+    # Fill table
+    for i in range(m):
+        char = s[i]
+        
+        # Copy previous row values
+        for c in alphabet:
+            if i > 0:
+                R[c][i] = R[c][i - 1]
+
+        # Update current position for char
+        R[char][i] = i
+
+    return R
+
+"""
+def extended_bad_char(s):
     n = len(s)
-    hash = defaultdict(lambda: [0] * (n - 1))
+    hash = defaultdict(lambda: [-1] * (n - 1))
 
-    for i in range(1, n):
+    for i in range(0, n):
         suffix = s[:i]
-        char = suffix[i - 1]
+        char = suffix[i] if i > 0 else char =
 
-        if hash[char][i - 1] < n - i:
-            hash[char][i - 1] = i - 1
+        # Copy previous row's values
+        if i > 1:
+            for key in hash:
+                hash[key][i - 1] = hash[key][i - 2]  # Copy previous row
+
+        # Update new occurrence
+        hash[char][i - 1] = i - 1
 
     return hash
+"""
 
 def z_suffix(s):
     s = s[::-1]
@@ -160,55 +190,57 @@ def bm(s, p):
     
     print(b_c)
     for i in e_b_c:
-        print(i, e_b_c[i])    
+        print("ebc",i, e_b_c[i])    
     print(g_s, m_p)
 
-    i = 0
+    k = 0
     # While loop so that pattern doesn't overflow the text
-    while i <= n-m:
+    while k <= n-m:
         # Index the last character for pattern
         j = m - 1
 
         print()
-        print("INDEX:",i, j)
-        print("COMPARISON:", s[i+j], p[j])
+        print("INDEX:",k, j)
+        print("COMPARISON:", s[k+j], p[j])
 
         # compare characters from right to left
-        while j >= 0 and p[j] == s[i+j]:
+        while j >= 0 and p[j] == s[k+j]:
             j -= 1
             print()
-            print("COMPARE:", s[i+j], p[j])
-            print("crawling", i, j)
+            print("COMPARE:", s[k+j], p[j])
+            print("crawling", k, j)
 
         print()
-        print("COMPARING:", s[i+j], p[j])
+        print("COMPARING:", s[k+j], p[j])
 
         # If pattern is found
         if j == -1:
-            print("Pattern found at index", i)
-            char = s[i+j]
+            print("Pattern found at index", k)
+            char = s[k+j]
             bad_char_shift = b_c[char]
             print("shift", bad_char_shift, g_s[j])
-            if i + m < n:
-                i += max(1, bad_char_shift, g_s[j])
+            if k + m < n:
+                k += max(1, bad_char_shift, g_s[j])
             else:
-                i += 1
+                k += 1
 
         else:
             print("no match")
-            char = s[i+j]
+            char = s[k+j]
             bad_char_shift = b_c[char]
-            print("shift", bad_char_shift, g_s[j])
+            extended_bad_char_shift = e_b_c[char][j-1]
+            print("ebc shift", extended_bad_char_shift, bad_char_shift, g_s[j])
             # If char does not exist in the pattern, skip past it
             if bad_char_shift == 0:
-                i += m
+                k += m
             else:
-                i += max(1, j - bad_char_shift, g_s[j])
+                k += max(1, j - bad_char_shift, g_s[j])
 
 s1="acababacaba"
 s2="AABAACAADAABAABA"
 
 pat1="acab"
 pat2="AABA"
+pat3="tbapxab"
 
-bm(s1, pat1)
+bm(s1, pat3)
