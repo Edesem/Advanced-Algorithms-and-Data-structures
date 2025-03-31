@@ -167,10 +167,13 @@ def bm(s, p):
     e_b_c = extended_bad_char(p)
     g_s, m_p = good_suffix(p)
     
+    # Debugging info
+    """
     print(b_c)
     for i in e_b_c:
         print("ebc",i, e_b_c[i])    
     print(g_s, m_p)
+    """
 
     k = 0
     # While loop so that pattern doesn't overflow the text
