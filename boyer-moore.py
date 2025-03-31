@@ -33,26 +33,6 @@ def extended_bad_char(s):
 
     return hash
 
-"""
-def extended_bad_char(s):
-    n = len(s)
-    hash = defaultdict(lambda: [-1] * (n - 1))
-
-    for i in range(0, n):
-        suffix = s[:i]
-        char = suffix[i] if i > 0 else char =
-
-        # Copy previous row's values
-        if i > 1:
-            for key in hash:
-                hash[key][i - 1] = hash[key][i - 2]  # Copy previous row
-
-        # Update new occurrence
-        hash[char][i - 1] = i - 1
-
-    return hash
-"""
-
 def z_suffix(s):
     s = s[::-1]
     
