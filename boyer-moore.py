@@ -198,26 +198,17 @@ def bm(s, p):
         # Index the last character for pattern
         j = m - 1
 
-        print()
-        print("INDEX:",k, j)
-        print("COMPARISON:", s[k+j], p[j])
-
         # compare characters from right to left
         while j >= 0 and p[j] == s[k+j]:
             j -= 1
-            print()
-            print("COMPARE:", s[k+j], p[j])
-            print("crawling", k, j)
-
-        print()
-        print("COMPARING:", s[k+j], p[j])
 
         # If pattern is found
         if j == -1:
             print("Pattern found at index", k)
+
             char = s[k+j]
             bad_char_shift = b_c[char]
-            print("shift", bad_char_shift, g_s[j])
+
             if k + m < n:
                 k += max(1, bad_char_shift, g_s[j])
             else:
@@ -225,22 +216,23 @@ def bm(s, p):
 
         else:
             print("no match")
+
             char = s[k+j]
+
             bad_char_shift = b_c[char]
-            print("bad char", e_b_c[char][j])
             extended_bad_char_shift = e_b_c[char][j-1]
-            print("ebc shift", extended_bad_char_shift, bad_char_shift, g_s[j])
+
             # If char does not exist in the pattern, skip past it
             if bad_char_shift == 0:
                 k += m
             else:
-                k += max(1, j - bad_char_shift, g_s[j])
+                k += max(1, j - bad_char_shift, j - extended_bad_char_shift, g_s[j])
 
 s1="acababacaba"
 s2="AABAACAADAABAABA"
 
 pat1="acab"
 pat2="AABA"
-pat3="tbapxab"
+pat3="acab"
 
 bm(s1, pat3)
