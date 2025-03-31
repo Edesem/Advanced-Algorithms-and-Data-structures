@@ -215,8 +215,7 @@ def bm(s, p):
                 k += 1
 
         else:
-            print("no match")
-
+            # Pattern not found, check for bad character
             char = s[k+j]
 
             bad_char_shift = b_c[char]
