@@ -178,13 +178,13 @@ def bm(s, p):
     k = 0
     # While loop so that pattern doesn't overflow the text
     while k <= n-m:
-        print(f"\nChecking alignment at index {k}...")
+        #print(f"\nChecking alignment at index {k}...")
         # Index the last character for pattern
         j = m - 1
 
         # compare characters from right to left
         while j >= 0 and p[j] == s[k+j]:
-            print(f"  Match at pattern[{j}] and text[{k+j}] ({p[j]} == {s[k+j]})")
+            #print(f"  Match at pattern[{j}] and text[{k+j}] ({p[j]} == {s[k+j]})")
             j -= 1
 
         # If pattern is found
@@ -195,7 +195,7 @@ def bm(s, p):
 
             if k + m < n:
                 shift = max(1, bad_char_shift, g_s[j])
-                print(f"  Shifting by {shift} (pattern found)")
+                #print(f"  Shifting by {shift} (pattern found)")
                 k += shift
             else:
                 k += 1
@@ -203,7 +203,8 @@ def bm(s, p):
         else:
             # Pattern not found, check for bad character
             char = s[k+j]
-            print(f"  Mismatch at pattern[{j}] and text[{k+j}] ({p[j]} != {s[k+j]})")
+            #print(char, k+j, s[])
+            #print(f"  Mismatch at pattern[{j}] and text[{k+j}] ({p[j]} != {s[k+j]})")
             bad_char_shift = b_c[char]
             extended_bad_char_shift = e_b_c[char][j-1]
 
@@ -213,11 +214,11 @@ def bm(s, p):
 
             # If char does not exist in the pattern, skip past it
             if bad_char_shift == 0:
-                print(f"  Character '{char}' not in pattern. Shifting by {m}.")
+                #print(f"  Character '{char}' not in pattern. Shifting by {m}.")
                 k += m
             else:
-                shift = max(1, j - bad_char_shift, j - extended_bad_char_shift, g_s[j])
-                print(f"  Shifting by {shift} (bad_char_shift={bad_char_shift}, extended_bad_char_shift={extended_bad_char_shift}, good_suffix_shift={g_s[j]})")
+                shift = max(1, j - bad_char_shift - 1, j - extended_bad_char_shift - 1, g_s[j])
+                #print(f"  Shifting by {shift} (bad_char_shift={bad_char_shift}, extended_bad_char_shift={extended_bad_char_shift}, good_suffix_shift={g_s[j]})")
                 k += shift
 
 s1="acababacaba"
