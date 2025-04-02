@@ -219,8 +219,8 @@ def bm(s, p):
 
             # If char does not exist in the pattern, skip past it
             if bad_char_shift == 0:
-                print(f"  Character '{char}' not in pattern. Shifting by {m-(m-k)}.")
-                j += m-(m-k)
+                print(f"  Character '{char}' not in pattern. Shifting by {m-(m-k-1)}.")
+                j += m-(m-k-1)
             else:
                 shift = max(1, k - bad_char_shift, k - extended_bad_char_shift, g_s[k])
                 if bad_char_shift > k:
