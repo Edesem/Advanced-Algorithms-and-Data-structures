@@ -178,13 +178,13 @@ def bm(s, p):
     j = 0
     # While loop so that pattern doesn't overflow the text
     while j <= n-m:
-        print(f"\nChecking alignment at index {j}...")
+        #print(f"\nChecking alignment at index {j}...")
         # Index the last character for pattern
         k = m - 1
 
         # compare characters from right to left
         while k >= 0 and p[k] == s[j+k]:
-            print(f"  Match at pattern[{k}] and text[{j+k}] ({p[k]} == {s[j+k]})")
+            #print(f"  Match at pattern[{k}] and text[{j+k}] ({p[k]} == {s[j+k]})")
             k -= 1
 
         # If pattern is found
@@ -209,9 +209,11 @@ def bm(s, p):
         else:
             # Pattern not found, check for bad character
             char = s[j+k]
-            print(f"  Mismatch at pattern[{k}] and text[{j+k}] ({p[k]} != {s[j+k]})")
+            #print(f"  Mismatch at pattern[{k}] and text[{j+k}] ({p[k]} != {s[j+k]})")
             bad_char_shift = b_c[char]
             extended_bad_char_shift = e_b_c[char][k-1]
+
+            method = max(bad_char_shift, extended_bad_char_shift)
 
             # Clause to prevent negative shifts
             if extended_bad_char_shift == -1:
@@ -219,13 +221,13 @@ def bm(s, p):
 
             # If char does not exist in the pattern, skip past it
             if bad_char_shift == 0:
-                print(f"  Character '{char}' not in pattern. Shifting by {m-(m-k-1)}.")
+                #print(f"  Character '{char}' not in pattern. Shifting by {m-(m-k-1)}.")
                 j += m-(m-k-1)
             else:
-                shift = max(1, k - bad_char_shift, k - extended_bad_char_shift, g_s[k])
+                shift = max(1, k - method, g_s[k])
                 if bad_char_shift > k:
                     shift = 1
-                print(f"  Shifting by {shift} (bad_char_shift={bad_char_shift}, extended_bad_char_shift={extended_bad_char_shift}, good_suffix_shift={g_s[k]})")
+                #print(f"  Shifting by {shift}, k is {k} (bad_char_shift={bad_char_shift}, extended_bad_char_shift={extended_bad_char_shift}, good_suffix_shift={g_s[k]})")
                 j += shift
 
 s1="acababacaba"
@@ -236,4 +238,4 @@ pat1="acab"
 pat2="AABA"
 pat3="010"
 
-bm(s2, pat2)
+bm(s3, pat3)
