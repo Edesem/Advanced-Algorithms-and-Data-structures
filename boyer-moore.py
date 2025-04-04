@@ -213,22 +213,27 @@ def bm(s, p):
             bad_char_shift = b_c[char]
             extended_bad_char_shift = e_b_c[char][k-1]
 
-            method = max(bad_char_shift, extended_bad_char_shift)
-
-            # Clause to prevent negative shifts
             if extended_bad_char_shift == -1:
-                extended_bad_char_shift = 0
+                extended_bad_char_shift = k + 1
+
+            method = max(bad_char_shift, extended_bad_char_shift)
 
             # If char does not exist in the pattern, skip past it
             if bad_char_shift == -1:
                 print(f"  Character '{char}' not in pattern. Shifting by {m-(m-k-1)}.")
                 j += m-(m-k-1)
             else:
-                shift = max(1, k - method, g_s[k])
-                if bad_char_shift > k:
-                    shift = 1
-                print(f"  Shifting by {shift}, k is {k} (bad_char_shift={bad_char_shift}, extended_bad_char_shift={extended_bad_char_shift}, good_suffix_shift={g_s[k]})")
-                j += shift
+                # Check if mismatched character appears further in the pattern
+                if bad_char_shift == -1 or bad_char_shift > k:
+                    # If it doesn't appear, shift past the mismatch
+                    print(f"  Character '{char}' does not appear later in the pattern. Shifting by {m-k+1}.")
+                    j += m - (k + 1)
+                else:
+                    shift = max(1, k - method, g_s[k])
+                    if bad_char_shift > k:
+                        shift = 1
+                    print(f"  Shifting by {shift}, k is {k} (bad_char_shift={bad_char_shift}, extended_bad_char_shift={extended_bad_char_shift}, good_suffix_shift={g_s[k]})")
+                    j += shift
 
 s1="acababacaba"
 s2="AABAACAADAABAABA"
@@ -240,7 +245,7 @@ pat2="AABA"
 pat3="010"
 pat4="abc"
 
-bm(s1, pat1)
-bm(s2, pat2)
+#bm(s1, pat1)
+#bm(s2, pat2)
 bm(s3, pat3)
-bm(s4, pat4)
+#bm(s4, pat4)
