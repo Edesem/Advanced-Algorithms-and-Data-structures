@@ -236,6 +236,30 @@ def bm(s, p):
                     print(f"  Shifting by {shift}, k is {k} (bad_char_shift={bad_char_shift}, extended_bad_char_shift={extended_bad_char_shift}, good_suffix_shift={g_s[k]})")
                     j += shift
 
+
+"""
+    # Performance calculator
+    comparison = []
+    shift = []
+    for i in range(10):
+        print(f"Iteration {i+1}")
+        binary_string = ran_str.generate_binary_string(1000000)
+        binary_pattern = ran_str.generate_binary_string(10)
+        _, comparisons, shifts = boyer_moore_search(binary_string, binary_pattern)
+        comparison.append(comparisons)
+        shift.append(shifts)
+    avg_comparisons = sum(comparison) / len(comparison)
+    avg_shifts = sum(shift) / len(shift)
+
+    general_comparisons = 642096
+    general_shifts = 299758
+
+    print(f"\nPercentage improvement\nComparisons = {((general_comparisons - avg_comparisons) / general_comparisons) * 100:.2f}%\nShifts = {((general_shifts - avg_shifts) / general_shifts) * 100:.2f}%\n")
+
+    print(f'\n\nComparisons made = {avg_comparisons}\nShifts made = {avg_shifts}')
+
+"""
+
 s1="acababacaba"
 s2="AABAACAADAABAABA"
 s3="0011010101111001001101100"
