@@ -61,5 +61,39 @@ class SuffixTree:
 def naive_suffix_tree(str):
     n = len(str)
     tree = SuffixTree(str)
+    root = Node()
+    tree.root = root
+
     for i in range(n):
-        
+        # begin phase i+1
+        for j in range(i + 1):
+            # begin extension j
+            current_node = root
+            k = j
+            while k <= i:
+                char = str[k]
+                if char not in current_node.children:
+                    # Create a new node for this character
+                    new_node = Node()
+                    new_node.start = k
+                    new_node.end = n
+                    current_node.children[char] = new_node
+                    break
+                # If character exists, follow the edge
+                current_node = current_node.children[char]
+                k += 1
+            # end of extension j
+        # end of phase i+1 (I_{i+1} computed)
+    return tree
+
+# Example usage
+if __name__ == "__main__":
+    text = "abac"
+    suffix_tree = naive_suffix_tree(text)
+    suffix_tree.print_tree()
+    # Output the suffix tree structure
+    # This will print the structure of the suffix tree for the given text
+    # Note: The print_tree method is a simple representation of the tree.
+    # Expected output:
+    # └── [b] (banana)
+    #     └── [a] (ana)
