@@ -13,10 +13,10 @@
 """
 
 class Node:
-    def __init__(self):
-        self.children = {}  # Dictionary to store edges (key: character, value: Node)
-        self.start = None  # Start index of substring (for edge label)
-        self.end = None  # End index of substring
+    def __init__(self, start=None, end=None):
+        self.children = {}  # Key: first char of the edge label
+        self.start = start  # Index in original text
+        self.end = end      # Index in original text
 
 class SuffixTree:
     def __init__(self, text):
@@ -25,29 +25,51 @@ class SuffixTree:
         self.build_tree()
 
     def build_tree(self):
-        """Naively build the suffix tree by inserting all suffixes."""
-        for i in range(len(self.text)):  # Insert each suffix into the tree
-            self.insert_suffix(i)
+        n = len(self.text)
+        for i in range(n):  # Phase i+1
+            for j in range(i + 1):  # Extensions
+                self.insert_suffix(j, i)
 
-    def insert_suffix(self, suffix_start):
-        """Insert a suffix starting at index `suffix_start`."""
+    def insert_suffix(self, start_index, end_index):
+        """Insert the suffix text[start_index:end_index+1] into the tree."""
         current_node = self.root
-        i = suffix_start  # Start of suffix
+        k = start_index  # Cursor in the suffix
 
-        while i < len(self.text):
-            char = self.text[i]
+        while k <= end_index:
+            current_char = self.text[k]
+            if current_char not in current_node.children:
+                # No edge starting with current_char, create a new leaf
+                leaf = Node(k, end_index + 1)
+                current_node.children[current_char] = leaf
+                return
 
-            if char not in current_node.children:
-                # Create a new node for this character
-                new_node = Node()
-                new_node.start = i
-                new_node.end = len(self.text)  # End of substring
-                current_node.children[char] = new_node
-                return  # Suffix is fully inserted
+            child = current_node.children[current_char]
+            edge_start = child.start
+            edge_end = child.end
+            label = self.text[edge_start:edge_end]
+            l = 0  # Match length
 
-            # If character exists, follow the edge
-            current_node = current_node.children[char]
-            i += 1  # Move to next character
+            # Walk along the edge label
+            while k <= end_index and l < len(label) and self.text[k] == label[l]:
+                k += 1
+                l += 1
+
+            if l == len(label):
+                # Full match, descend to the child
+                current_node = child
+            else:
+                # Mismatch — split the edge
+                split = Node(edge_start, edge_start + l)
+                current_node.children[current_char] = split
+
+                # Adjust the original child
+                child.start = edge_start + l
+                split.children[self.text[child.start]] = child
+
+                # Add the new leaf for the remaining suffix
+                new_leaf = Node(k, end_index + 1)
+                split.children[self.text[k]] = new_leaf
+                return
 
     def print_tree(self, node=None, indent=""):
         """Recursively print the tree structure."""
@@ -82,13 +104,15 @@ def naive_suffix_tree(str):
                 # If character exists, follow the edge
                 current_node = current_node.children[char]
                 k += 1
+
+                print(f"Following edge for {char}: {str[current_node.start:current_node.end]}")
             # end of extension j
         # end of phase i+1 (I_{i+1} computed)
     return tree
-
+    
 # Example usage
 if __name__ == "__main__":
-    text = "abac"
+    text = "banana"
     suffix_tree = naive_suffix_tree(text)
     suffix_tree.print_tree()
     # Output the suffix tree structure
