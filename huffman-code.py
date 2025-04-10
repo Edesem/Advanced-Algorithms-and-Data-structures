@@ -37,7 +37,19 @@ def huffman_encode(s):
         
     print("\nFinal Huffman Tree:")
     print_huffman_tree(heap[0])
+    huffman_coding(heap[0])
+
+def huffman_coding(node, code=""):
+    _, _, data = node
+    if isinstance(data, str):
+        print(f"{data}: {code}")
+    elif isinstance(data, tuple):
+        left, right = data
+        huffman_coding(left, code + "0")
+        huffman_coding(right, code + "1")
+
+    
 
 s = "A" * 5 + "B" * 9 + "C" * 12 + "D" * 13 + "E" * 16 + "F" * 45
-
-huffman_encode(s)
+s1 = "aaaabbccde"
+huffman_encode(s1)
