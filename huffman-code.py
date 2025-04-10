@@ -1,3 +1,4 @@
+import heapq
 
 def get_freq(s):
     freq = {}
@@ -8,7 +9,21 @@ def get_freq(s):
         else:
             freq[c] = 1
 
-    print(freq)
-    return freq
+    res = {key: val for key, val in sorted(freq.items(), key = lambda ele: ele[1])}
+    print(res)
+    return res
 
-get_freq("aaabbbccde`")
+def huffman_encode(s):
+    f = get_freq(s)
+    heap = []
+
+    for key, val in f.items():
+        heapq.heappush(heap, (val, key)) 
+
+    while len(heap) > 1:
+        left = heapq.heappop(heap)
+        right = heapq.heappop(heap)
+
+    print(heap)
+
+huffman_encode("aababbddceef")
