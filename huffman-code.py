@@ -1,5 +1,4 @@
 import heapq
-from itertools import count
 
 def get_freq(s):
     freq = {}
@@ -21,20 +20,21 @@ def huffman_encode(s):
     f = get_freq(s)
     print("Frequencies:", f)
     heap = []
-    counter = count()
+    counter = 0
 
     for key, val in f.items():
-        heapq.heappush(heap, (val, next(counter), key))
+        counter += 1
+        heapq.heappush(heap, (val, counter, key))
 
     while len(heap) > 1:
         left = heapq.heappop(heap)
         right = heapq.heappop(heap)
         combined_freq = left[0] + right[0]
-        new_node = (combined_freq, next(counter), (left, right))
+        counter += 1
+        new_node = (combined_freq, counter, (left, right))
         heapq.heappush(heap, new_node)
 
-    root = heap[0]
     print("\nFinal Huffman Tree:")
-    print_huffman_tree(root)
+    print_huffman_tree(heap[0])
 
 huffman_encode("aababbddceef")
