@@ -18,7 +18,6 @@ def print_huffman_tree(node, indent="", is_left=True):
 
 def huffman_encode(s):
     f = get_freq(s)
-    print("Frequencies:", f)
     heap = []
     counter = 0
 
@@ -29,12 +28,16 @@ def huffman_encode(s):
     while len(heap) > 1:
         left = heapq.heappop(heap)
         right = heapq.heappop(heap)
+
         combined_freq = left[0] + right[0]
         counter += 1
+
         new_node = (combined_freq, counter, (left, right))
         heapq.heappush(heap, new_node)
-
+        
     print("\nFinal Huffman Tree:")
     print_huffman_tree(heap[0])
 
-huffman_encode("aababbddceef")
+s = "A" * 5 + "B" * 9 + "C" * 12 + "D" * 13 + "E" * 16 + "F" * 45
+
+huffman_encode(s)
