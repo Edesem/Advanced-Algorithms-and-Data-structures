@@ -31,8 +31,7 @@ def bwt_invert(bwt):
 
         return ranked
     
-    #k = bwt_key(bwt)
-    k = s2
+    k = bwt_key(bwt)
 
     k = char_rank(k)
     #sorted_k = "".join(sorted(k))
@@ -41,20 +40,22 @@ def bwt_invert(bwt):
     for i in range(len(k)):
         print(sorted_k[i], k[i])
 
+    
     # Start at $
+    str=""
     for i in range(len(k)):
         if k[i][0] == "$":
-            
+            str = sorted_k[i][0]
         
     
 
 
 
 
-s1 = "wooloomooloo"
+s1 = "wooloomooloo$"
 s2 = "olba$luaolh"
 
-bwt_a = bwt_array(s2)
+bwt_a = bwt_array(s1)
 
 for i in bwt_a:
     print(i)
