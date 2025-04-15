@@ -1,36 +1,50 @@
-class Node:
+class Node():
     def __init__(self):
         self.children = {}  # char -> (start, end, child_node)
 
-def build_naive_suffix_tree(text):
-    text += '$'
+def build_suffix_tree(s):
+    s += '$'
     root = Node()
-    for i in range(len(text)):
+    
+    # Insert suffixes one by one
+    for i in range(len(s)):
         current = root
         j = i
-        while j < len(text):
-            if text[j] in current.children:
-                start, end, child = current.children[text[j]]
-                label = text[start:end+1]
+        
+        while j < len(s):
+            next_char = s[j]
+            if next_char in current.children:
+                start, end, child = current.children[next_char]
+                existing_suffix = s[start:end+1]
                 k = 0
-                while k < len(label) and j < len(text) and text[j] == label[k]:
+                    
+                # Compare current suffix with the existing suffix
+                # s[j] and not char variable because the next_char needs to update
+                while k < len(existing_suffix) and j < len(s) and s[j] == existing_suffix[k]:
                     j += 1
                     k += 1
-                if k == len(label):
+
+                # If suffix matches
+                if k == len(existing_suffix):
                     current = child
+
+                # Else split where the mismatch occurs
                 else:
-                    # Need to split
                     split_node = Node()
-                    current.children[text[start]] = (start, start + k - 1, split_node)
-                    split_node.children[label[k]] = (start + k, end, child)
+
+                    current.children[s[start]] = (start, start + k - 1, split_node)
+                    split_node.children[existing_suffix[k]] = (start + k, end, child)
+
                     leaf = Node()
-                    split_node.children[text[j]] = (j, len(text) - 1, leaf)
+                    split_node.children[next_char] = (j, len(s) - 1, leaf)
                     break
+                
+            # No match, just insert new edge
             else:
-                leaf = Node()
-                current.children[text[j]] = (j, len(text) - 1, leaf)
+                node = Node()
+                current.children[next_char] = (j, len(s) - 1, node)
                 break
-    return root, text
+    return root, s
 
 def print_tree(node, text, indent=""):
     for i, (char, (start, end, child)) in enumerate(node.children.items()):
@@ -41,9 +55,6 @@ def print_tree(node, text, indent=""):
         next_indent = indent + ("    " if is_last else "│   ")
         print_tree(child, text, next_indent)
 
-
-if __name__ == '__main__':
-    text = 'banana'
-    tree, full_text = build_naive_suffix_tree(text)
-    print_tree(tree, full_text)
-
+s = "banana"
+root, s = build_suffix_tree(s)
+print_tree(root, s)
