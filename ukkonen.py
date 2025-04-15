@@ -12,31 +12,49 @@ def build_suffix_tree(s):
         j = i
         
         while j < len(s):
-            char = s[j]
-            if char in current.children:
-                start, end, child = current.children[char]
-                suffix = s[start:end+1]
+            next_char = s[j]
+            if next_char in current.children:
+                start, end, child = current.children[next_char]
+                existing_suffix = s[start:end+1]
                 k = 0
                     
-                # Compare for 
-                while s[j] == suffix[k] and k < len(suffix):
+                # Compare current suffix with the existing suffix
+                # s[j] and not char variable because the next_char needs to update
+                while k < len(existing_suffix) and j < len(s) and s[j] == existing_suffix[k]:
                     j += 1
                     k += 1
 
                 # If suffix matches
-                if k == len(suffix):
+                if k == len(existing_suffix):
                     current = child
 
                 # Else split where the mismatch occurs
                 else:
                     split_node = Node()
-                    
+
                     current.children[s[start]] = (start, start + k - 1, split_node)
-                    split_node.children[suffix[k]] = (start + k, end, child)
+                    split_node.children[existing_suffix[k]] = (start + k, end, child)
 
                     leaf = Node()
-                    split_node.children[s[j]] = (j, len(s) - 1, leaf)
+                    split_node.children[next_char] = (j, len(s) - 1, leaf)
                     break
-        print(s[i:])
+                
+            # No match, just insert new edge
+            else:
+                node = Node()
+                current.children[next_char] = (j, len(s) - 1, node)
+                break
+    return root, s
 
-build_suffix_tree("banana")
+def print_tree(node, text, indent=""):
+    for i, (char, (start, end, child)) in enumerate(node.children.items()):
+        label = text[start:end + 1]
+        is_last = (i == len(node.children) - 1)
+        branch = "└── " if is_last else "├── "
+        print(indent + branch + f"[{char}] ({label})")
+        next_indent = indent + ("    " if is_last else "│   ")
+        print_tree(child, text, next_indent)
+
+s = "banana"
+root, s = build_suffix_tree(s)
+print_tree(root, s)
