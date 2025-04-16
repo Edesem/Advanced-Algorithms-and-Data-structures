@@ -48,13 +48,20 @@ def build_suffix_tree(s):
 
 def print_tree(node, text, indent=""):
     for i, (char, (start, end, child)) in enumerate(node.children.items()):
-        label = text[start:end + 1]
+        # get suffix
+        suffix = text[start:end + 1]
+
+        # Check to see if its the last child for the branch style
         is_last = (i == len(node.children) - 1)
+
+        # Choose branch
         branch = "└── " if is_last else "├── "
-        print(indent + branch + f"[{char}] ({label})")
+        print(indent + branch + f"[{char}] ({suffix})")
+
+        # Adjust indent level
         next_indent = indent + ("    " if is_last else "│   ")
         print_tree(child, text, next_indent)
 
-s = "banana"
+s = "abcabxabcd"
 root, s = build_suffix_tree(s)
 print_tree(root, s)
