@@ -15,7 +15,8 @@ def modulo(a, b, n):
         current = (current * current) % n
         if lsb == 1:
             result = (result * current) % n
-        return result
+            
+    return result
     
 
 def getBinaryRepresentation(n):
