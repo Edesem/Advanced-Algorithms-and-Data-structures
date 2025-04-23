@@ -14,7 +14,7 @@ def millerRabinRandomisedPrimality(n,k):
     t = n - 1
     while t % 2 == 0:
         s = s + 1
-        t = t / 2
+        t = t // 2
     
     # Run k random tests
     for _ in range(k):
@@ -24,15 +24,20 @@ def millerRabinRandomisedPrimality(n,k):
 
 
         # Check if n satisfies fermat's little theorem for this witness
-        if s != 1:
-            return False
+        if x == 1 or x == n - 1:
+            continue
         
         # Run sequence test
         for _ in range(s):
-            if j == 1 and (j-1 != 1 and j-1 != n - 1):
+            x = pow(x, 2, n)
+
+            if x == n - 1:
+                break
+            if x == 1:
+                # x_j == 1 and x_{j-1} != 1 and != n-1
                 return False
     
     # If n has passed all tests, then it's probably a prime
     return True
 
-
+print(millerRabinRandomisedPrimality(999983, 100000))
