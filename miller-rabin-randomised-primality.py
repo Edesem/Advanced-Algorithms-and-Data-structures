@@ -1,11 +1,38 @@
+import random
+
 def millerRabinRandomisedPrimality(n,k):
     # Special case
     if n == 2 or n == 3:
         return True
     
     # If n is even
-    if n % 2 == 0:
+    if n < 2 or n % 2 == 0:
         return False
     
+    # Factor n - 1 as (2^s)*t, where t is odd
+    s = 0
+    t = n - 1
+    while t % 2 == 0:
+        s = s + 1
+        t = t / 2
     
+    # Run k random tests
+    for _ in range(k):
+        # Select random witness
+        a = random.randrange(1,n-1)
+        x = pow(a, t, n)  # x0 = a^t mod n
+
+
+        # Check if n satisfies fermat's little theorem for this witness
+        if s != 1:
+            return False
+        
+        # Run sequence test
+        for _ in range(s):
+            if j == 1 and (j-1 != 1 and j-1 != n - 1):
+                return False
+    
+    # If n has passed all tests, then it's probably a prime
+    return True
+
 
