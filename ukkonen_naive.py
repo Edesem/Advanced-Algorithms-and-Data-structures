@@ -43,7 +43,7 @@ def build_suffix_tree(s):
                     split_node.parent = current
                     split_node.edge_start = start
                     split_node.edge_end = start + k - 1
-                    
+
                     internal_nodes.append(split_node)
 
                     leaf = Node()
@@ -56,6 +56,13 @@ def build_suffix_tree(s):
                 current.children[next_char] = (j, len(s) - 1, node)
                 break
     return root, s
+
+def get_label(node, text):
+    parts = []
+    while node.parent is not None:
+        parts.append(text[node.edge_start:node.edge_end+1])
+        node = node.parent
+    return ''.join(reversed(parts))
 
 def print_tree(node, text, indent=""):
     for i, (char, (start, end, child)) in enumerate(node.children.items()):
