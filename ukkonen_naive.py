@@ -9,6 +9,7 @@ class Node():
 def build_suffix_tree(s):
     s += '$'
     root = Node()
+    internal_nodes = []
     
     # Insert suffixes one by one
     for i in range(len(s)):
@@ -37,7 +38,13 @@ def build_suffix_tree(s):
                     split_node = Node()
 
                     current.children[s[start]] = (start, start + k - 1, split_node)
+
                     split_node.children[existing_suffix[k]] = (start + k, end, child)
+                    split_node.parent = current
+                    split_node.edge_start = start
+                    split_node.edge_end = start + k - 1
+                    
+                    internal_nodes.append(split_node)
 
                     leaf = Node()
                     split_node.children[next_char] = (j, len(s) - 1, leaf)
