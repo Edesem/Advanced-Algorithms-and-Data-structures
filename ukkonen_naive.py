@@ -1,6 +1,10 @@
 class Node():
     def __init__(self):
         self.children = {}  # char -> (start, end, child_node)
+        self.suffix_link = None
+        self.parent = None
+        self.edge_start = None
+        self.edge_end = None
 
 def build_suffix_tree(s):
     s += '$'
