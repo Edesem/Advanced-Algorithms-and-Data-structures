@@ -1,5 +1,3 @@
-from modular_exponenation import getBinaryRepresentation
-
 def multiply(u, v):
     if u < 10 or v < 10:
         return u * v
