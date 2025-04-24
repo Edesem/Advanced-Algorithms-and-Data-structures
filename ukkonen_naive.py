@@ -64,6 +64,23 @@ def get_label(node, text):
         node = node.parent
     return ''.join(reversed(parts))
 
+def find_node_with_label(root, label, text):
+    current = root
+    i = 0
+    while i < len(label):
+        if label[i] in current.children:
+            start, end, child = current.children[label[i]]
+            edge = text[start:end+1]
+            for c in edge:
+                if i < len(label) and c == label[i]:
+                    i += 1
+                else:
+                    return None
+            current = child
+        else:
+            return None
+    return current
+
 def print_tree(node, text, indent=""):
     for i, (char, (start, end, child)) in enumerate(node.children.items()):
         # get suffix
