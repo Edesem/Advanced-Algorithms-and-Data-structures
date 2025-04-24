@@ -18,4 +18,6 @@ def multiply(u, v):
 
         return left * (10 ** (2 * half)) + ((left_right - left - right) * (10 ** half)) + right
 
-print(multiply(13, 14))
+x=5
+y=12
+print(multiply(x,y))
