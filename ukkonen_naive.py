@@ -82,7 +82,7 @@ def build_suffix_tree(s):
                 active_node = active_node.suffix_link
             else:
                 active_node = root
-    return root, s
+    return root
 
 def naive_suffix_tree(s):
     root = Node()
@@ -132,7 +132,7 @@ def naive_suffix_tree(s):
                 node = Node()
                 current.children[next_char] = (j, len(s) - 1, node)
                 break
-    return root, s
+    return root
 
 def print_tree(node, text, indent=""):
     for i, (char, (start, end, child)) in enumerate(node.children.items()):
@@ -154,7 +154,7 @@ s = "abcabxabcd"
 s = "bananabanana$" 
 
 start = time.time()
-root, s = build_suffix_tree(s)
+root = build_suffix_tree(s)
 print_tree(root, s)
 
 end = time.time()
@@ -163,7 +163,7 @@ print(f"NEW: {end - start:.6f} seconds")
 
 
 start = time.time()
-root, s = naive_suffix_tree(s)
+root = naive_suffix_tree(s)
 
 end = time.time()
 print_tree(root, s)
