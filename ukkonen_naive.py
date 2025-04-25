@@ -1,4 +1,6 @@
 import time
+import random
+import string
 
 class Node():
     def __init__(self):
@@ -81,10 +83,58 @@ def build_suffix_tree(s):
                 active_node = active_node.suffix_link
             else:
                 active_node = root
-
-
     return root, s
 
+def naive_suffix_tree(s):
+    s += '$'
+    root = Node()
+    internal_nodes = []
+    
+    # Insert suffixes one by one
+    for i in range(len(s)):
+        current = root
+        j = i
+        
+        while j < len(s):
+            next_char = s[j]
+            if next_char in current.children:
+                start, end, child = current.children[next_char]
+                existing_suffix = s[start:end+1]
+                k = 0
+                    
+                # Compare current suffix with the existing suffix
+                # s[j] and not char variable because the next_char needs to update
+                while k < len(existing_suffix) and j < len(s) and s[j] == existing_suffix[k]:
+                    j += 1
+                    k += 1
+
+                # If suffix matches
+                if k == len(existing_suffix):
+                    current = child
+
+                # Else split where the mismatch occurs
+                else:
+                    split_node = Node()
+
+                    current.children[s[start]] = (start, start + k - 1, split_node)
+
+                    split_node.children[existing_suffix[k]] = (start + k, end, child)
+                    split_node.parent = current
+                    split_node.edge_start = start
+                    split_node.edge_end = start + k - 1
+
+                    internal_nodes.append(split_node)
+
+                    leaf = Node()
+                    split_node.children[next_char] = (j, len(s) - 1, leaf)
+                    break
+                
+            # No match, just insert new edge
+            else:
+                node = Node()
+                current.children[next_char] = (j, len(s) - 1, node)
+                break
+    return root, s
 
 def print_tree(node, text, indent=""):
     for i, (char, (start, end, child)) in enumerate(node.children.items()):
@@ -103,11 +153,19 @@ def print_tree(node, text, indent=""):
         print_tree(child, text, next_indent)
 
 s = "abcabxabcd"
+s = "banana" * 1000  # 6000 characters, lots of repeated structure
 
 start = time.time()
 root, s = build_suffix_tree(s)
-print_tree(root, s)
 
 end = time.time()
 
-print(f"Execution time: {end - start:.6f} seconds")
+print(f"NEW: {end - start:.6f} seconds")
+
+
+start = time.time()
+root, s = naive_suffix_tree(s)
+
+end = time.time()
+
+print(f"OLD: {end - start:.6f} seconds")
