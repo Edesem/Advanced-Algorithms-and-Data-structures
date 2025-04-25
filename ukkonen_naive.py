@@ -86,51 +86,53 @@ def build_suffix_tree(s):
 
 def naive_suffix_tree(s):
     root = Node()
-    internal_nodes = []
-    
-    # Insert suffixes one by one
     for i in range(len(s)):
         current = root
         j = i
-        
+
         while j < len(s):
             next_char = s[j]
             if next_char in current.children:
                 start, end, child = current.children[next_char]
-                existing_suffix = s[start:end+1]
+                label = s[start:end + 1]
                 k = 0
-                    
-                # Compare current suffix with the existing suffix
-                # s[j] and not char variable because the next_char needs to update
-                while k < len(existing_suffix) and j < len(s) and s[j] == existing_suffix[k]:
+
+                # Traverse along the edge until mismatch or end
+                while k < len(label) and j < len(s) and s[j] == label[k]:
                     j += 1
                     k += 1
 
-                # If suffix matches
-                if k == len(existing_suffix):
+                if k == len(label):
                     current = child
-
-                # Else split where the mismatch occurs
                 else:
-                    split_node = Node()
+                    # Mismatch – need to split
+                    split = Node()
+                    split.edge_start = start
+                    split.edge_end = start + k - 1
+                    split.parent = current
 
-                    current.children[s[start]] = (start, start + k - 1, split_node)
+                    # Update old child
+                    child.edge_start = start + k
+                    split.children[s[child.edge_start]] = (child.edge_start, end, child)
+                    child.parent = split
 
-                    split_node.children[existing_suffix[k]] = (start + k, end, child)
-                    split_node.parent = current
-                    split_node.edge_start = start
-                    split_node.edge_end = start + k - 1
-
-                    internal_nodes.append(split_node)
-
+                    # Create new leaf
                     leaf = Node()
-                    split_node.children[next_char] = (j, len(s) - 1, leaf)
+                    leaf.edge_start = j
+                    leaf.edge_end = len(s) - 1
+                    split.children[s[j]] = (j, len(s) - 1, leaf)
+                    leaf.parent = split
+
+                    # Reassign split to parent
+                    current.children[next_char] = (split.edge_start, split.edge_end, split)
                     break
-                
-            # No match, just insert new edge
             else:
-                node = Node()
-                current.children[next_char] = (j, len(s) - 1, node)
+                # No match – insert new leaf
+                leaf = Node()
+                leaf.edge_start = j
+                leaf.edge_end = len(s) - 1
+                current.children[next_char] = (j, len(s) - 1, leaf)
+                leaf.parent = current
                 break
     return root
 
