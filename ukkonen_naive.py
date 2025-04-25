@@ -1,6 +1,4 @@
 import time
-import random
-import string
 
 class Node():
     def __init__(self):
@@ -149,9 +147,14 @@ def print_tree(node, text, indent=""):
         print_tree(child, text, next_indent)
 
 s = "abcabxabcd"
-s = "bananabanana" * 10000 + "$" 
+s = "bananabanana" * 1000 + "$" 
 s = ""
 s = "abc$"
+s = "aaaa$"
+s = "xabxac$"
+s = "abcabxabcd$"
+s = "abcabcabcabc$"
+s = "$"
 
 start = time.time()
 root = build_suffix_tree(s)
