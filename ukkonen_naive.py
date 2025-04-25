@@ -11,7 +11,6 @@ class Node():
         self.edge_end = None
 
 def build_suffix_tree(s):
-    s += "$"  # Ensure unique termination
     root = Node()
     active_node = root
     active_edge = ""
@@ -150,21 +149,21 @@ def print_tree(node, text, indent=""):
         print_tree(child, text, next_indent)
 
 s = "abcabxabcd"
-s = "bananabanana" * 1000 + "$" 
+s = "bananabanana" * 10000 + "$" 
+s = ""
+s = "abc$"
 
 start = time.time()
 root = build_suffix_tree(s)
-#print_tree(root, s)
-
 end = time.time()
+print_tree(root, s)
 
 print(f"NEW: {end - start:.6f} seconds")
 
 
 start = time.time()
 root = naive_suffix_tree(s)
-
 end = time.time()
-#print_tree(root, s)
+print_tree(root, s)
 
 print(f"OLD: {end - start:.6f} seconds")
