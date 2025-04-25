@@ -134,6 +134,7 @@ def naive_suffix_tree(s):
                 current.children[next_char] = (j, len(s) - 1, leaf)
                 leaf.parent = current
                 break
+            
     return root
 
 def print_tree(node, text, indent=""):
