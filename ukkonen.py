@@ -146,27 +146,30 @@ def print_tree(node, text, indent=""):
         next_indent = indent + ("    " if is_last else "│   ")
         print_tree(child, text, next_indent)
 
-s = "abcabxabcd"
-s = "bananabanana" * 1000 + "$" 
-s = ""
-s = "abc$"
-s = "aaaa$"
-s = "xabxac$"
-s = "abcabxabcd$"
-s = "abcabcabcabc$"
-s = "$"
+def __main__():
+    s = "abcabxabcd"
+    s = "bananabanana" * 1000 + "$" 
+    s = ""
+    s = "abc$"
+    s = "aaaa$"
+    s = "xabxac$"
+    s = "abcabxabcd$"
+    s = "abcabcabcabc$"
+    s = "$"
 
-start = time.time()
-root = build_suffix_tree(s)
-end = time.time()
-print_tree(root, s)
+    start = time.time()
+    root = build_suffix_tree(s)
+    end = time.time()
+    print_tree(root, s)
 
-print(f"NEW: {end - start:.6f} seconds")
+    print(f"NEW: {end - start:.6f} seconds")
 
 
-start = time.time()
-root = naive_suffix_tree(s)
-end = time.time()
-print_tree(root, s)
+    start = time.time()
+    root = naive_suffix_tree(s)
+    end = time.time()
+    print_tree(root, s)
 
-print(f"OLD: {end - start:.6f} seconds")
+    print(f"OLD: {end - start:.6f} seconds")
+
+#__main__()
