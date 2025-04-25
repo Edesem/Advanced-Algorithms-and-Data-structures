@@ -1,3 +1,5 @@
+import time
+
 class Node():
     def __init__(self):
         self.children = {}  # char -> (start, end, child_node)
@@ -101,5 +103,11 @@ def print_tree(node, text, indent=""):
         print_tree(child, text, next_indent)
 
 s = "abcabxabcd"
+
+start = time.time()
 root, s = build_suffix_tree(s)
 print_tree(root, s)
+
+end = time.time()
+
+print(f"Execution time: {end - start:.6f} seconds")
