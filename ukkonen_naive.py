@@ -11,7 +11,6 @@ class Node():
         self.edge_end = None
 
 def build_suffix_tree(s):
-    s += '$'
     root = Node()
     active_node = root
     active_edge = None
@@ -86,7 +85,6 @@ def build_suffix_tree(s):
     return root, s
 
 def naive_suffix_tree(s):
-    s += '$'
     root = Node()
     internal_nodes = []
     
@@ -153,10 +151,11 @@ def print_tree(node, text, indent=""):
         print_tree(child, text, next_indent)
 
 s = "abcabxabcd"
-s = "banana" * 1000  # 6000 characters, lots of repeated structure
+s = "bananabanana$" 
 
 start = time.time()
 root, s = build_suffix_tree(s)
+print_tree(root, s)
 
 end = time.time()
 
@@ -167,5 +166,6 @@ start = time.time()
 root, s = naive_suffix_tree(s)
 
 end = time.time()
+print_tree(root, s)
 
 print(f"OLD: {end - start:.6f} seconds")
