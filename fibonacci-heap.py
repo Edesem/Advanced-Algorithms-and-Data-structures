@@ -10,3 +10,7 @@ class Node():
         self.right = None
 
 class FibonacciHeap():
+    def __init__(self):
+        self.n = 0
+        self.min = None
+        self.root_list = None
