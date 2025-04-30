@@ -33,6 +33,9 @@ class FibonacciHeap():
             self.root_list = node
         else:
             node.right = self.root_list
+            node.left = self.root_list
+            self.root_list.right = node
+            self.root_list.left = node
 
     def minimum(self):
         return self.min
