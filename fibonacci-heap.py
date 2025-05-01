@@ -5,12 +5,12 @@ class Node():
         self.mark = False
 
         self.parent = None 
-        self.child = None
+        self.children = None
         self.left = None
         self.right = None
 
     def __str__(self) -> str:
-        return f"Node(key={self.key}, degree={self.degree}, parent={self.parent.key if self.parent else None}, child={self.child.key if self.child else None})"
+        return f"Node(key={self.key}, degree={self.degree}, parent={self.parent.key if self.parent else None}, child={self.children.key if self.children else None})"
 
 
 class FibonacciHeap():
@@ -20,6 +20,7 @@ class FibonacciHeap():
         self.root_list = None
 
     def insert(self, key):
+        self.print_root_list()
         node = Node(key) 
         node.left = node
         node.right = node
@@ -41,12 +42,14 @@ class FibonacciHeap():
             self.root_list.left.right = node
             self.root_list.left = node
 
+        print(f"Post insertion for {node.key}\n", node.left, '\n', node.right, '\n')
+
     def minimum(self):
         return self.min
     
     def extract_min(self):
         min_node = self.minimum()
-        if min_node.child is None:
+        if min_node.children is None:
             min_node.left.right = min_node.right
             min_node.right.left = min_node.left
             self.consolidate()
@@ -57,31 +60,36 @@ class FibonacciHeap():
         min = self.minimum()
         current_node = min
         next_node = current_node.right
-
+        self.print_root_list()
         # Do While loop
         while True:
+            #print(current_node)
             while next_node != min: 
+                #print(next_node, next_node.right)
                 if current_node.degree != next_node.degree:
                     next_node = next_node.right
                     continue
                 else:
+                   # print("parenting")
                     # Determine new parent and child
                     if current_node.key < next_node.key:
                         child, parent = next_node, current_node
                     else:
                         child, parent = current_node, next_node
 
-                    if parent.child == None:
-                        parent.child = child
+                    print(child, parent)
+
+                    if parent.children == None:
+                        parent.children = child
                         child.parent = parent
                         child.left = child
                         child.right = child
                     else:
                         child.parent = parent
-                        child.left = parent.child.left
-                        child.right = parent.child.right
-                        parent.left.right = child
-                        parent.right = child
+                        child.left = parent.children.left
+                        child.right = parent.children.right
+                        parent.children.left.right = child
+                        parent.children.right = child
                 
                 next_node = next_node.right
 
@@ -122,6 +130,20 @@ class FibonacciHeap():
         result.append(f"Min: {self.min.key if self.min else 'None'}")
         result.append(f"Total Nodes: {self.count}")
         return "\n".join(result)
+    
+    def print_root_list(self):
+        if not self.root_list:
+            print("Empty root list")
+            return
+
+        print("Root list:")
+        node = self.root_list
+        seen = set()
+        while node and node not in seen:
+            print(f"Key: {node.key}, Left: {node.left.key}, Right: {node.right.key}")
+            seen.add(node)
+            node = node.right
+
 
 fh = FibonacciHeap()
 fh.insert(3)
