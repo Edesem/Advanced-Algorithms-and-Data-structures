@@ -103,18 +103,25 @@ class FibonacciHeap():
         if self.root_list is None:
             return "FibonacciHeap(empty)"
 
-        output = [f"FibonacciHeap(count={self.count}, min={self.min.key})"]
-        output.append("Root list:")
+        result = ["FibonacciHeap:"]
+        node = self.root_list
+        visited = set()
 
-        current = self.root_list
-        first = True
+        def visit(node):
+            return f"(key={node.key}, degree={node.degree})"
+
+        result.append("Root List:")
+        current = node
         while True:
-            output.append(str(current))
+            result.append("  " + visit(current))
+            visited.add(current)
             current = current.right
-            if current == self.root_list:
+            if current == node or current in visited:
                 break
 
-        return "\n".join(output)
+        result.append(f"Min: {self.min.key if self.min else 'None'}")
+        result.append(f"Total Nodes: {self.count}")
+        return "\n".join(result)
 
 fh = FibonacciHeap()
 fh.insert(1)
