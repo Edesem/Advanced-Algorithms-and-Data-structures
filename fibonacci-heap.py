@@ -80,8 +80,11 @@ class FibonacciHeap():
                         child.right = parent.children.right
                         parent.left.right = child
                         parent.right = child
+                
+                next_node = next_node.right
 
             current_node = current_node.right
+            next_node = current_node.right
             if current_node == min:
                 break
                         
