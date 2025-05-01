@@ -46,7 +46,7 @@ class FibonacciHeap():
     
     def extract_min(self):
         min_node = self.minimum()
-        if min_node.children is None:
+        if min_node.child is None:
             min_node.left.right = min_node.right
             min_node.right.left = min_node.left
             self.consolidate()
@@ -71,15 +71,15 @@ class FibonacciHeap():
                     else:
                         child, parent = current_node, next_node
 
-                    if parent.children == None:
-                        parent.children = child
+                    if parent.child == None:
+                        parent.child = child
                         child.parent = parent
                         child.left = child
                         child.right = child
                     else:
                         child.parent = parent
-                        child.left = parent.children.left
-                        child.right = parent.children.right
+                        child.left = parent.child.left
+                        child.right = parent.child.right
                         parent.left.right = child
                         parent.right = child
                 
