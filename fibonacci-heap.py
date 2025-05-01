@@ -37,5 +37,5 @@ class FibonacciHeap():
             self.root_list.left.right = node
             self.root_list.left = node
 
-    def minimum(self):
+    def min(self):
         return self.min
