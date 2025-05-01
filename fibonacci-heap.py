@@ -64,23 +64,21 @@ class FibonacciHeap():
                 else:
                     # Determine new parent and child
                     if current_node.key < next_node.key:
-                        child = next_node
-                        parent = current_node
+                        child, parent = next_node, current_node
                     else:
-                        child = current_node
-                        parent = next_node
+                        child, parent = current_node, next_node
 
                     if parent.children == None:
-                        parent.children = next_node
-                        child.parent = current_node
-                        child.left = next_node
-                        child.right = next_node
+                        parent.children = child
+                        child.parent = parent
+                        child.left = child
+                        child.right = child
                     else:
-                        child.parent = current_node
-                        child.left = current_node.children.left
-                        child.right = current_node.children.right
-                        parent.left.right = next_node
-                        parent.right = next_node
+                        child.parent = parent
+                        child.left = parent.children.left
+                        child.right = parent.children.right
+                        parent.left.right = child
+                        parent.right = child
                         
     def merge(self):
         pass
