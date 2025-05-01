@@ -56,7 +56,8 @@ class FibonacciHeap():
         current_node = min
         next_node = current_node.right
 
-        while current_node != min:
+        # Do While loop
+        while True:
             while next_node != min: 
                 if current_node.degree != next_node.degree:
                     next_node = next_node.right
@@ -79,6 +80,10 @@ class FibonacciHeap():
                         child.right = parent.children.right
                         parent.left.right = child
                         parent.right = child
+
+            current_node = current_node.right
+            if current_node == min:
+                break
                         
     def merge(self):
         pass
