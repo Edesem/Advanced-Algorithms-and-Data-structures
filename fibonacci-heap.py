@@ -50,8 +50,8 @@ class FibonacciHeap():
     def extract_min(self):
         min_node = self.minimum()
         if min_node.children is None:
-            min_node.left.right = min_node.right
-            min_node.right.left = min_node.left
+            min_node.right.right.left = min_node
+            min_node.right = min_node.right.right
             self.consolidate()
 
         return min.key
@@ -65,7 +65,7 @@ class FibonacciHeap():
         while True:
             #print(current_node)
             while next_node != min: 
-                #print(next_node, next_node.right)
+                print(next_node, next_node.right)
                 if current_node.degree != next_node.degree:
                     next_node = next_node.right
                     continue
@@ -77,7 +77,7 @@ class FibonacciHeap():
                     else:
                         child, parent = current_node, next_node
 
-                    print(child, parent)
+                    #print(child, parent)
 
                     if parent.children == None:
                         parent.children = child
@@ -86,10 +86,10 @@ class FibonacciHeap():
                         child.right = child
                     else:
                         child.parent = parent
+                        child.right = parent.children
                         child.left = parent.children.left
-                        child.right = parent.children.right
                         parent.children.left.right = child
-                        parent.children.right = child
+                        parent.children.left = child
                 
                 next_node = next_node.right
 
