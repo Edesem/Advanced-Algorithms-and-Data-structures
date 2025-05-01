@@ -54,7 +54,7 @@ class FibonacciHeap():
         return min.key
 
     def consolidate(self):
-        min = self.min()
+        min = self.minimum()
         current_node = min
         next_node = current_node.right
 
