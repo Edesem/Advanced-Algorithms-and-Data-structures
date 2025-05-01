@@ -41,11 +41,11 @@ class FibonacciHeap():
             self.root_list.left.right = node
             self.root_list.left = node
 
-    def min(self):
+    def minimum(self):
         return self.min
     
     def extract_min(self):
-        min_node = self.min()
+        min_node = self.minimum()
         if min_node.children is None:
             min_node.left.right = min_node.right
             min_node.right.left = min_node.left
@@ -124,8 +124,9 @@ class FibonacciHeap():
         return "\n".join(result)
 
 fh = FibonacciHeap()
-fh.insert(1)
-fh.insert(2)
-fh.insert(49)
-fh.insert(25)
+fh.insert(3)
+fh.insert(5)
+fh.insert(7)
+fh.insert(9)
+fh.extract_min()
 print(fh)
