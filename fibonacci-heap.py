@@ -9,6 +9,10 @@ class Node():
         self.left = None
         self.right = None
 
+    def __str__(self) -> str:
+        return f"Node(key={self.key}, degree={self.degree}, parent={self.parent.key if self.parent else None}, child={self.child.key if self.child else None})"
+
+
 class FibonacciHeap():
     def __init__(self):
         self.count = 0
@@ -22,7 +26,7 @@ class FibonacciHeap():
 
         self.join_root_list(node)
 
-        if key < self.min.key:
+        if self.min is None or key < self.min.key:
             self.min = node
         
         self.count += 1
@@ -46,8 +50,6 @@ class FibonacciHeap():
             min_node.left.right = min_node.right
             min_node.right.left = min_node.left
             self.consolidate()
-
-
 
         return min.key
 
@@ -96,3 +98,27 @@ class FibonacciHeap():
 
     def delete(self):
         pass
+
+    def __str__(self):
+        if self.root_list is None:
+            return "FibonacciHeap(empty)"
+
+        output = [f"FibonacciHeap(count={self.count}, min={self.min.key})"]
+        output.append("Root list:")
+
+        current = self.root_list
+        first = True
+        while True:
+            output.append(str(current))
+            current = current.right
+            if current == self.root_list:
+                break
+
+        return "\n".join(output)
+
+fh = FibonacciHeap()
+fh.insert(1)
+fh.insert(2)
+fh.insert(49)
+fh.insert(25)
+print(fh)
