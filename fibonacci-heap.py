@@ -62,18 +62,26 @@ class FibonacciHeap():
                     next_node = next_node.right
                     continue
                 else:
+                    # Determine new parent and child
                     if current_node.key < next_node.key:
-                        if current_node.children == None:
-                            current_node.children = next_node
-                            next_node.parent = current_node
-                            next_node.left = next_node
-                            next_node.right = next_node
-                        else:
-                            next_node.parent = current_node
-                            next_node.left = current_node.children.left
-                            next_node.right = current_node.children.right
-                            current_node.left.right = next_node
-                            current_node.right = next_node
+                        child = next_node
+                        parent = current_node
+                    else:
+                        child = current_node
+                        parent = next_node
+
+                    if parent.children == None:
+                        parent.children = next_node
+                        child.parent = current_node
+                        child.left = next_node
+                        child.right = next_node
+                    else:
+                        child.parent = current_node
+                        child.left = current_node.children.left
+                        child.right = current_node.children.right
+                        parent.left.right = next_node
+                        parent.right = next_node
+                        
     def merge(self):
         pass
 
