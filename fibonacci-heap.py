@@ -41,11 +41,39 @@ class FibonacciHeap():
         return self.min
     
     def extract_min(self):
-        pass
+        min_node = self.min()
+        if min_node.children is None:
+            min_node.left.right = min_node.right
+            min_node.right.left = min_node.left
+            self.consolidate()
+
+
+
+        return min.key
 
     def consolidate(self):
-        pass
+        min = self.min()
+        current_node = min
+        next_node = current_node.right
 
+        while current_node != min:
+            while next_node != min: 
+                if current_node.degree != next_node.degree:
+                    next_node = next_node.right
+                    continue
+                else:
+                    if current_node.key < next_node.key:
+                        if current_node.children == None:
+                            current_node.children = next_node
+                            next_node.parent = current_node
+                            next_node.left = next_node
+                            next_node.right = next_node
+                        else:
+                            next_node.parent = current_node
+                            next_node.left = current_node.children.left
+                            next_node.right = current_node.children.right
+                            current_node.left.right = next_node
+                            current_node.right = next_node
     def merge(self):
         pass
 
