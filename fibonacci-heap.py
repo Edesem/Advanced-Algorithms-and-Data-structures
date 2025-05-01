@@ -39,3 +39,18 @@ class FibonacciHeap():
 
     def min(self):
         return self.min
+    
+    def extract_min(self):
+        pass
+
+    def consolidate(self):
+        pass
+
+    def merge(self):
+        pass
+
+    def decrease_key(self):
+        pass
+
+    def delete(self):
+        pass
