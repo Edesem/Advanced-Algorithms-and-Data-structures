@@ -96,6 +96,8 @@ class FibonacciHeap():
                         child.left = parent.children.left
                         parent.children.left.right = child
                         parent.children.left = child
+
+                    parent.degree += 1
                 
                 next_node = next_next_node
 
