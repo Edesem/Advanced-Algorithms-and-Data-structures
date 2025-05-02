@@ -1,3 +1,5 @@
+import math
+
 class Node():
     def __init__(self, key):
         self.key = key
@@ -55,6 +57,9 @@ class FibonacciHeap():
         return min.key
 
     def consolidate(self):
+        max_degree = int(math.log2(self.count)) + 2
+        degrees_index = [None] * max_degree
+
         min = self.minimum()
         current_node = min
         next_node = current_node.right
