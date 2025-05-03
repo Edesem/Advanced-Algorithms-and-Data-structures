@@ -57,6 +57,7 @@ class FibonacciHeap():
         return min.key
 
     def consolidate(self):
+        # Create array indexed by amount of degrees
         max_degree = int(math.log2(self.count)) + 2
         degrees_index = [None] * max_degree
 
