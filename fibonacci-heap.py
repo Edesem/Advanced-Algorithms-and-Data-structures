@@ -61,6 +61,7 @@ class FibonacciHeap():
         max_degree = int(math.log2(self.count)) + 2
         degrees_index = [None] * max_degree
 
+        # Set nodes
         min = self.minimum()
         current_node = min
         next_node = current_node.right
