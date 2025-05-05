@@ -9,6 +9,7 @@ class Node():
         self.edge_end = None
 
 def build_suffix_tree(s):
+    # https://www.youtube.com/watch?v=ALEV0Hc5dDk used to supplement knowledge
     root = Node()
     active_node = root
     active_edge = ""
