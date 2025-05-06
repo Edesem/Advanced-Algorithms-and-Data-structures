@@ -149,12 +149,13 @@ def print_tree(node, text, indent=""):
         print_tree(child, text, next_indent)
 
 def preformance():
-    s = "bananabanana" * 1000 + "$" 
+    #s = "bananabanana" * 1000 + "$" 
+    s = "abcabxabcd$"
 
     start = time.time()
     root = build_suffix_tree(s)
     end = time.time()
-    #print_tree(root, s)
+    print_tree(root, s)
 
     print(f"Ukkonen: {end - start:.6f} seconds")
 
@@ -165,3 +166,5 @@ def preformance():
     #print_tree(root, s)
 
     print(f"Naive: {end - start:.6f} seconds")
+
+preformance()
