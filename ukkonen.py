@@ -46,6 +46,9 @@ def build_suffix_tree(s):
                 else:
                     edge_length = end - start + 1
 
+                # Skip counting
+                # Jump node and subtract edge_length from active_length
+                # Instead of traversing one by one
                 if active_length >= edge_length:
                     active_node = next_node
                     active_length -= edge_length
@@ -174,4 +177,4 @@ def preformance():
 
     print(f"Naive: {end - start:.6f} seconds")
 
-#preformance()
+preformance()
