@@ -9,16 +9,17 @@ class Node():
         self.edge_end = None
 
 def build_suffix_tree(s):
-    # https://www.youtube.com/watch?v=ALEV0Hc5dDk used to supplement 
+    # https://www.youtube.com/watch?v=ALEV0Hc5dDk used to supplement knowledge
     root = Node()
     active_node = root
     active_edge = ""
     active_length = 0
-    # Number of suffixes to add
-    remainder = 0
+    remainder = 0  # Number of suffixes to add
     last_created_internal_node = None
+    global_end = [-1] # Shared pointer for all leaves, to allow for rapid leaf extension
 
     for i in range(len(s)):
+        global_end[0] = i # Extend the leaves at once
         remainder += 1
         last_created_internal_node = None
 
@@ -30,15 +31,20 @@ def build_suffix_tree(s):
                 # Create new leaf
                 leaf = Node()
                 leaf.edge_start = i
-                leaf.edge_end = len(s) - 1
-                active_node.children[active_edge] = (i, len(s) - 1, leaf)
+                leaf.edge_end = global_end
+                active_node.children[active_edge] = (i, global_end, leaf)
 
                 if last_created_internal_node:
                     last_created_internal_node.suffix_link = active_node
                     last_created_internal_node = None
             else:
                 start, end, next_node = active_node.children[active_edge]
-                edge_length = end - start + 1
+                
+                # Prevent TypeError
+                if isinstance(end, list):
+                    edge_length = end[0] - start + 1
+                else:
+                    edge_length = end - start + 1
 
                 if active_length >= edge_length:
                     active_node = next_node
@@ -60,9 +66,9 @@ def build_suffix_tree(s):
 
                     leaf = Node()
                     leaf.edge_start = i
-                    leaf.edge_end = len(s) - 1
-
+                    leaf.edge_end = global_end
                     active_node.children[active_edge] = (split.edge_start, split.edge_end, split)
+
                     split.children[s[start + active_length]] = (start + active_length, end, next_node)
                     split.children[s[i]] = (i, len(s) - 1, leaf)
 
