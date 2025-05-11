@@ -27,6 +27,7 @@ def build_suffix_tree(s):
         remainder += 1
         last_created_internal_node = None
 
+        # Number of characters left to add
         while remainder > 0:
             if active_length == 0:
                 active_edge = s[i]
@@ -61,6 +62,7 @@ def build_suffix_tree(s):
                     continue
 
                 # Does the next character already exist from the root?
+                # Make Extension
                 if s[start + active_length] == s[i]:
                     active_length += 1
                     if last_created_internal_node:
@@ -82,6 +84,7 @@ def build_suffix_tree(s):
 
             remainder -= 1
 
+            # Move to next extension
             if active_node == root and active_length > 0:
                 active_length -= 1
                 active_edge = s[i - remainder + 1] if remainder > 0 else ""
