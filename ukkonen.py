@@ -67,24 +67,15 @@ def build_suffix_tree(s):
                         last_created_internal_node.suffix_link = active_node
                     break # Show stopper rule
                 else:
-                    # Split the existing edge
+                    # Split edge
                     split = Node()
-
-                    # Reconnect the active_node's child to point to the split node via a new edge
-                    # Previous edge label was (start, end) — now it becomes (start, start + active_length - 1)
                     active_node.children[active_edge] = Edge(start, start + active_length - 1, split)
 
-                    # Create a new leaf node for the new character
                     leaf = Node()
-
-                    # Add two children to the split node:
-                    # 1. Remaining part of the old edge (the continuation after the split)
                     split.children[s[start + active_length]] = Edge(start + active_length, end, next_node)
-
-                    # 2. New edge for the new character (from current phase)
                     split.children[s[i]] = Edge(i, global_end, leaf)
 
-                    # Handle suffix link
+                    # suffix link
                     if last_created_internal_node:
                         last_created_internal_node.suffix_link = split
                     last_created_internal_node = split
