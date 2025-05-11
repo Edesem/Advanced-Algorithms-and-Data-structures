@@ -46,6 +46,7 @@ def build_suffix_tree(s):
                     active_edge = s[start + edge_length]
                     continue
 
+                # Does the next character already exist from the root?
                 if s[start + active_length] == s[i]:
                     active_length += 1
                     if last_created_internal_node:
