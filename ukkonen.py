@@ -50,7 +50,7 @@ def build_suffix_tree(s):
                     active_length += 1
                     if last_created_internal_node:
                         last_created_internal_node.suffix_link = active_node
-                    break
+                    break # Show stopper rule
                 else:
                     # Split edge
                     split = Node()
@@ -167,4 +167,4 @@ def preformance():
 
     print(f"Naive: {end - start:.6f} seconds")
 
-preformance()
+#preformance()
