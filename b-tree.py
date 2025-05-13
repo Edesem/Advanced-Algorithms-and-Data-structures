@@ -49,7 +49,12 @@ class Tree():
                 right.insert(keys[i])
                 print(keys[i])
 
-            print(left.keys, right.keys)
+            new_root = Node(median)
+            new_root.children = [left, right]
+            left.parent = new_root
+            right.parent = new_root
+
+            print(left.keys, right.keys, new_root.keys)
 
     def delete(self):
         pass
