@@ -12,14 +12,19 @@ class Node():
     
 class Tree():
     def __init__(self, max):
+        self.root = None
         self.count = 0
         self.max = max
 
     def insert(self, key):
         # Base case, first insertion
+        node = Node(key)
+
         if self.count == 0:
-            node = Node(key)
+            self.root = node
             self.count += 1
+
+
 
     def delete(self):
         pass
