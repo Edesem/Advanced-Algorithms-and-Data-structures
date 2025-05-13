@@ -27,8 +27,11 @@ class Tree():
             self.count += 1
 
         elif self.root.get_length() < self.max:
-            self.root.insert(key)
-            self.count += 1
+            if self.root.children is not None:
+                pass
+            else:
+                self.root.insert(key)
+                self.count += 1
 
         # Root layer is max capacity
         else:
