@@ -11,8 +11,9 @@ class Node():
         return len(self.keys)
     
 class Tree():
-    def __init__(self):
+    def __init__(self, max):
         self.count = 0
+        self.max = max
 
     def insert(self, key):
         # Base case, first insertion
