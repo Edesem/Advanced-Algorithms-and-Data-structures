@@ -18,18 +18,32 @@ class Tree():
 
     def insert(self, key):
         # Base case, first insertion
-        node = Node(key)
-
         if self.count == 0:
+            node = Node(key)
             self.root = node
             self.count += 1
+
         elif self.root.get_length() < self.max:
             self.root.insert(key)
             self.count += 1
 
+        # Root layer is max capacity
+        else:
+            keys = self.root.keys
+            keys.sort()
+            n = len(keys)
+            median = keys[n // 2]
+
+            print(median)
 
     def delete(self):
         pass
 
     def search(self):
         pass
+
+t = Tree(3)
+t.insert(7)
+t.insert(23)
+t.insert(59)
+t.insert(73)
