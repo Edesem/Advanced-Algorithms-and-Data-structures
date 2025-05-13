@@ -23,7 +23,9 @@ class Tree():
         if self.count == 0:
             self.root = node
             self.count += 1
-
+        elif self.root.get_length() < self.max:
+            self.root.insert(key)
+            self.count += 1
 
 
     def delete(self):
