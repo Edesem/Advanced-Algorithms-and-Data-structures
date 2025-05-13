@@ -56,6 +56,8 @@ class Tree():
             new_root.children = [left, right]
             left.parent = new_root
             right.parent = new_root
+            
+            self.root = new_root
 
             print(left.keys, right.keys, new_root.keys)
 
