@@ -1,6 +1,9 @@
 class Node():
-    def __init__(self, key):
-        self.keys = [key]
+    def __init__(self, key=None):
+        if key is None:
+            self.keys = []
+        else:
+            self.keys = [key]
         self.children = None
         self.parent = None
 
@@ -31,10 +34,22 @@ class Tree():
         else:
             keys = self.root.keys
             keys.sort()
-            n = len(keys)
-            median = keys[n // 2]
+            print(keys)
+            median_index = len(keys) // 2
+            median = keys[median_index]
 
-            print(median)
+            # Left node
+            left = Node()
+            for i in range(median_index):
+                left.insert(keys[i])
+                print(keys[i])
+
+            right = Node()
+            for i in range(median_index + 1, len(keys)):
+                right.insert(keys[i])
+                print(keys[i])
+
+            print(left.keys, right.keys)
 
     def delete(self):
         pass
@@ -42,8 +57,12 @@ class Tree():
     def search(self):
         pass
 
-t = Tree(3)
+t = Tree(7)
 t.insert(7)
 t.insert(23)
 t.insert(59)
 t.insert(73)
+t.insert(2)
+t.insert(21)
+t.insert(1)
+t.insert(11)
