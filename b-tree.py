@@ -19,7 +19,7 @@ class Tree():
         self.count = 0
         self.max = max
 
-    def insert(self, key):
+    def insert(self, key, node=None):
         # Base case, first insertion
         if self.count == 0:
             node = Node(key)
