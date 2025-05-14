@@ -35,6 +35,7 @@ class Tree():
 
         # Root layer is max capacity
         else:
+            self.root.insert(key)
             keys = self.root.keys
             keys.sort()
             print(keys)
