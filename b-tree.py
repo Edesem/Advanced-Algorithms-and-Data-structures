@@ -22,8 +22,7 @@ class Tree():
     def insert(self, key, node=None):
         # Base case, first insertion
         if self.root is None:
-            node = Node(key)
-            self.root = node
+            self.root = Node(key)
             self.count += 1
 
         elif self.root.get_length() < self.max:
