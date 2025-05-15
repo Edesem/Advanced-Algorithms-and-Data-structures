@@ -4,7 +4,7 @@ class Node():
             self.keys = []
         else:
             self.keys = [key]
-        self.children = None
+        self.children = []
         self.parent = None
 
     def insert(self, key):
