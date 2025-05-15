@@ -27,6 +27,8 @@ class Tree():
         if self.root is None:
             self.root = Node(key)
             self.count += 1
+            return
+        
 
         elif self.root.get_length() < self.max:
             result = self._insert_helper_(key, self.root)
@@ -41,20 +43,16 @@ class Tree():
             self.split(key)
 
 
-    def _insert_helper_(self, key, root):
-        print(key,  root.parent, root.children)
-        if root.children is not None:
-            for i in range(root.get_length()):
-                if key < self.root.keys[i]:
-                    self._insert_helper_(key, root.children[i])
-                if key > self.root.keys[i]:
-                    self._insert_helper_(key, root.children[i+1])
-        else:
-            for i in range(root.get_length()):
-                if key < self.root.keys[i]:
-                    self.children[i].insert(key)
-                if key > self.root.keys[i]:
-                    self.children[i + 1].insert(key)
+    def _node_to_insert(self, key, node):
+        while not node.is_leaf():
+            for i, value in enumerate(node.keys):
+                if key < value:
+                    node = node.children[i]
+                    break
+            else:
+                node = node.children[-1]
+
+        return node
     
     def split(self, key):
         self.root.insert(key)
