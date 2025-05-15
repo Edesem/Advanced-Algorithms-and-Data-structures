@@ -67,6 +67,12 @@ class Tree():
         if root.children is not None:
             for i in range(root.get_length()):
                 if key < self.root.keys[i]:
+                    self._insert_helper_(key, root.children[i])
+                if key > self.root.keys[i]:
+                    self._insert_helper_(key, root.children[i+1])
+        else:
+            for i in range(root.get_length()):
+                if key < self.root.keys[i]:
                     self.children[i].insert(key)
                 if key > self.root.keys[i]:
                     self.children[i + 1].insert(key)
@@ -77,6 +83,7 @@ class Tree():
     def search(self):
         pass
 
+"""
 t = Tree(4)
 t.insert(7)
 t.insert(23)
@@ -84,3 +91,9 @@ t.insert(59)
 t.insert(73)
 t.insert(93)
 t.insert(25)
+"""
+
+t = Tree(2)
+t.insert(1)
+t.insert(2) 
+t.insert(3)
