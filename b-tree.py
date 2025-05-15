@@ -35,7 +35,8 @@ class Tree():
         node = self._node_to_insert(key, self.root)
         
         if node.get_length() == self.max:
-            self.split(key, node)
+            node.insert(key)
+            self.split(node)
         else:
             node.insert(key)
 
@@ -55,8 +56,7 @@ class Tree():
 
         return node
     
-    def split(self, key, node):
-        node.insert(key)
+    def split(self, node):
         keys = node.keys
         keys.sort()
 
@@ -69,12 +69,37 @@ class Tree():
         left.keys = keys[:median_index]
         right.keys = keys[median_index+1:]
 
-        new_parent = Node(median)
-        new_parent.children = [left, right]
-        left.parent = new_parent
-        right.parent = new_parent
-        
-        self.root = new_parent
+            
+        # Carry over children if internal node
+        if node.children:
+            left.children = node.children[:median_index + 1]
+            right.children = node.children[median_index + 1:]
+            for child in left.children:
+                child.parent = left
+            for child in right.children:
+                child.parent = right
+
+        parent = node.parent
+        # case 1: node was root
+        if parent is None:
+            new_root = Node(median)
+            new_root.children = [left, right]
+            left.parent = right.parent = new_root
+            self.root = new_root
+
+        # case 2: promote median to parent
+        else:
+            idx = parent.children.index(node)
+            parent.children.pop(idx)
+            parent.children.insert(idx, left)
+            parent.children.insert(idx + 1, right)
+            left.parent = right.parent = parent
+            parent.insert(median)
+
+
+        # If parent now overflows, split it too
+        if parent and len(parent.keys) > self.max:
+            self.split(parent)
 
     def delete(self):
         pass
@@ -115,3 +140,13 @@ t.insert(2)
 t.insert(3)
 t.insert(4)
 t.insert(5)
+t.insert(6)
+t.insert(7)
+t.insert(8)
+t.insert(9)
+t.insert(10)
+t.insert(11)
+t.insert(12)
+t.insert(13)
+t.insert(14)
+t.insert(15)
