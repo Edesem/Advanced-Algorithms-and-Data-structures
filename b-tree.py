@@ -13,6 +13,9 @@ class Node():
     def get_length(self):
         return len(self.keys)
     
+    def is_leaf(self):
+        return self.get_length() == 0
+    
 class Tree():
     def __init__(self, max):
         self.root = None
