@@ -65,12 +65,9 @@ class Tree():
 
         # Left node
         left = Node()
-        for i in range(median_index):
-            left.insert(keys[i])
-
         right = Node()
-        for i in range(median_index + 1, len(keys)):
-            right.insert(keys[i])
+        left.keys = keys[:median_index]
+        right.keys = keys[median_index+1:]
 
         new_parent = Node(median)
         new_parent.children = [left, right]
