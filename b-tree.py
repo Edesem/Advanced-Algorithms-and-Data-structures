@@ -32,7 +32,8 @@ class Tree():
         node = self._node_to_insert(key, self.root)
         print(node)
         
-        if node.get_length()
+        if node.get_length() == self.max:
+            self.split(key, node)
 
     def _node_to_insert(self, key, node):
         print(node.is_leaf())
@@ -46,9 +47,9 @@ class Tree():
 
         return node
     
-    def split(self, key):
-        self.root.insert(key)
-        keys = self.root.keys
+    def split(self, key, node):
+        node.insert(key)
+        keys = node.keys
         keys.sort()
         print(keys)
         median_index = len(keys) // 2
@@ -65,14 +66,14 @@ class Tree():
             right.insert(keys[i])
             print(keys[i])
 
-        new_root = Node(median)
-        new_root.children = [left, right]
-        left.parent = new_root
-        right.parent = new_root
+        new_parent = Node(median)
+        new_parent.children = [left, right]
+        left.parent = new_parent
+        right.parent = new_parent
         
-        self.root = new_root
+        self.root = new_parent
 
-        print(left.keys, right.keys, new_root.keys)
+        print(left.keys, right.keys, new_parent.keys)
 
     def delete(self):
         pass
