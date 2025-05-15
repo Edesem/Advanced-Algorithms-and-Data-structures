@@ -36,34 +36,11 @@ class Tree():
 
         # Root layer is max capacity
         else:
-            self.root.insert(key)
-            keys = self.root.keys
-            keys.sort()
-            print(keys)
-            median_index = len(keys) // 2
-            median = keys[median_index]
+            self.split(key)
 
-            # Left node
-            left = Node()
-            for i in range(median_index):
-                left.insert(keys[i])
-                print(keys[i])
-
-            right = Node()
-            for i in range(median_index + 1, len(keys)):
-                right.insert(keys[i])
-                print(keys[i])
-
-            new_root = Node(median)
-            new_root.children = [left, right]
-            left.parent = new_root
-            right.parent = new_root
-            
-            self.root = new_root
-
-            print(left.keys, right.keys, new_root.keys)
 
     def _insert_helper_(self, key, root):
+        print(key,  root.parent, root.children)
         if root.children is not None:
             for i in range(root.get_length()):
                 if key < self.root.keys[i]:
@@ -76,6 +53,34 @@ class Tree():
                     self.children[i].insert(key)
                 if key > self.root.keys[i]:
                     self.children[i + 1].insert(key)
+    
+    def split(self, key):
+        self.root.insert(key)
+        keys = self.root.keys
+        keys.sort()
+        print(keys)
+        median_index = len(keys) // 2
+        median = keys[median_index]
+
+        # Left node
+        left = Node()
+        for i in range(median_index):
+            left.insert(keys[i])
+            print(keys[i])
+
+        right = Node()
+        for i in range(median_index + 1, len(keys)):
+            right.insert(keys[i])
+            print(keys[i])
+
+        new_root = Node(median)
+        new_root.children = [left, right]
+        left.parent = new_root
+        right.parent = new_root
+        
+        self.root = new_root
+
+        print(left.keys, right.keys, new_root.keys)
 
     def delete(self):
         pass
