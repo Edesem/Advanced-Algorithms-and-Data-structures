@@ -9,12 +9,9 @@ class Node():
 
     def insert(self, key):
         self.keys.append(key)
-
-    def get_length(self):
-        return len(self.keys)
     
     def is_leaf(self):
-        return self.get_length() == 0
+        return len(self.children) == 0
     
 class Tree():
     def __init__(self, max):
@@ -28,9 +25,12 @@ class Tree():
             self.root = Node(key)
             self.count += 1
             return
+    
+        node = self._node_to_insert(key, self.root)
+        print(node)
         
 
-        elif self.root.get_length() < self.max:
+        if self.root.get_length() < self.max:
             result = self._insert_helper_(key, self.root)
             if self.root.children is not None:
                 pass
@@ -44,6 +44,7 @@ class Tree():
 
 
     def _node_to_insert(self, key, node):
+        print(node.is_leaf())
         while not node.is_leaf():
             for i, value in enumerate(node.keys):
                 if key < value:
