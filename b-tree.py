@@ -9,6 +9,9 @@ class Node():
 
     def insert(self, key):
         self.keys.append(key)
+
+    def get_length(self):
+        return len(self.keys)
     
     def is_leaf(self):
         return len(self.children) == 0
@@ -29,19 +32,7 @@ class Tree():
         node = self._node_to_insert(key, self.root)
         print(node)
         
-
-        if self.root.get_length() < self.max:
-            result = self._insert_helper_(key, self.root)
-            if self.root.children is not None:
-                pass
-            else:
-                self.root.insert(key)
-                self.count += 1
-
-        # Root layer is max capacity
-        else:
-            self.split(key)
-
+        if node.get_length()
 
     def _node_to_insert(self, key, node):
         print(node.is_leaf())
