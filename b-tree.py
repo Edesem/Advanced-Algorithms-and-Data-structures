@@ -21,7 +21,7 @@ class Tree():
         self.root = None
         self.count = 0
         self.max = max
-
+        
     def insert(self, key, node=None):
         # Base case, first insertion
         if self.root is None:
@@ -44,7 +44,7 @@ class Tree():
         self.print_tree()
         print()
 
-
+    # Find node to insert into
     def _node_to_insert(self, key, node):
         while not node.is_leaf():
             for i, value in enumerate(node.keys):
