@@ -56,6 +56,7 @@ class Tree():
 
         return node
     
+    # Split specified node up
     def split(self, node):
         keys = node.keys
         keys.sort()
