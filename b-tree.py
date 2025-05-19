@@ -16,6 +16,9 @@ class Node():
     def is_leaf(self):
         return len(self.children) == 0
     
+    def delete(self, index):
+        self.keys.pop(index)
+    
 class Tree():
     def __init__(self, max):
         self.root = None
@@ -46,9 +49,9 @@ class Tree():
         if node.get_length() >= self.max:
             self.split(node)
 
-        print(f"Inserted key {key}")
-        self.print_tree()
-        print()
+        #print(f"Inserted key {key}")
+        #self.print_tree()
+        #print()
 
     # Find node to insert into
     def _node_to_insert(self, key, node):
@@ -108,9 +111,6 @@ class Tree():
         if parent and len(parent.keys) > self.max:
             self.split(parent)
 
-    def delete(self):
-        pass
-
     def search(self, key):
         if self.root is None:
             print(f"Key ({key}) does not exist - empty tree")
@@ -131,7 +131,13 @@ class Tree():
 
         index = node.keys.index(key)
         print(f"Found key ({key}) in {node.keys} at {index}")
-        return node, 
+        return node, index
+
+    def delete(self, key):
+        node, index = self.search(key)
+        node.delete(index)
+        print(node.keys)
+
 
     def print_tree(self, node=None, indent="", is_last=True):
         if node is None:
@@ -190,3 +196,5 @@ t.insert(15)
 print(t.count)
 
 t.search(15)
+
+t.delete(14)
