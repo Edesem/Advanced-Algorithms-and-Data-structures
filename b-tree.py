@@ -33,12 +33,10 @@ class Tree():
             return
     
         node = self._node_to_insert(key, self.root)
-        
-        if node.get_length() == self.max:
-            node.insert(key)
+
+        node.insert(key)
+        if node.get_length() >= self.max:
             self.split(node)
-        else:
-            node.insert(key)
 
         print(f"Inserted key {key}")
         self.print_tree()
@@ -135,7 +133,7 @@ t.insert(93)
 t.insert(25)
 """
 
-t = Tree(2)
+t = Tree(4)
 t.insert(1)
 t.insert(2) 
 t.insert(3)
