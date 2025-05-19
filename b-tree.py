@@ -111,8 +111,22 @@ class Tree():
     def delete(self):
         pass
 
-    def search(self):
-        pass
+    def search(self, key):
+        node = self.root
+        while key not in node.keys:
+            for i, value in enumerate(node.keys):
+                if key < value:
+                    node = node.children[i]
+                    break
+            else:
+                if len(node.children) == 0:
+                    print(f"Key ({key}) does not exist")
+                    return None
+                
+                node = node.children[-1]
+
+        print(f"Found key ({key}) at {node.keys}")
+        return node
 
     def print_tree(self, node=None, indent="", is_last=True):
         if node is None:
@@ -141,6 +155,13 @@ t.insert(93)
 t.insert(25)
 """
 
+t = Tree(2)
+t.insert(1)
+t.insert(2)
+t.insert(3)
+t.search(4)
+
+
 t = Tree(4)
 t.insert(1)
 t.insert(2) 
@@ -160,3 +181,5 @@ t.insert(15)
 t.insert(15)
 
 print(t.count)
+
+t.search(15)
