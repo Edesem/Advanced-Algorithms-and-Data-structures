@@ -35,6 +35,7 @@ class Tree():
         node = self._node_to_insert(key, self.root)
 
         node.insert(key)
+        self.count += 1
         if node.get_length() >= self.max:
             self.split(node)
 
@@ -149,3 +150,5 @@ t.insert(12)
 t.insert(13)
 t.insert(14)
 t.insert(15)
+
+print(t.count)
