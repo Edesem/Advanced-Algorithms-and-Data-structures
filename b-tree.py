@@ -112,6 +112,10 @@ class Tree():
         pass
 
     def search(self, key):
+        if self.root is None:
+            print(f"Key ({key}) does not exist - empty tree")
+            return None
+        
         node = self.root
         while key not in node.keys:
             for i, value in enumerate(node.keys):
@@ -125,8 +129,9 @@ class Tree():
                 
                 node = node.children[-1]
 
-        print(f"Found key ({key}) at {node.keys}")
-        return node
+        index = node.keys.index(key)
+        print(f"Found key ({key}) in {node.keys} at {index}")
+        return node, 
 
     def print_tree(self, node=None, indent="", is_last=True):
         if node is None:
@@ -154,12 +159,14 @@ t.insert(73)
 t.insert(93)
 t.insert(25)
 """
+t = Tree(2)
+t.search(1)
 
 t = Tree(2)
 t.insert(1)
 t.insert(2)
 t.insert(3)
-t.search(4)
+t.search(2)
 
 
 t = Tree(4)
