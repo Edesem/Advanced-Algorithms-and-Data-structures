@@ -21,8 +21,15 @@ class Tree():
         self.root = None
         self.count = 0
         self.max = max
+        self.set = set()
         
     def insert(self, key, node=None):
+        if key not in self.set:
+            self.set.add(key) 
+        else:
+            print(f"Key ({key}) already exists, duplicates not allowed")
+            return
+
         # Base case, first insertion
         if self.root is None:
             self.root = Node(key)
@@ -149,6 +156,7 @@ t.insert(11)
 t.insert(12)
 t.insert(13)
 t.insert(14)
+t.insert(15)
 t.insert(15)
 
 print(t.count)
