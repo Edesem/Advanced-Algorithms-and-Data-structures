@@ -136,7 +136,11 @@ class Tree():
     def delete(self, key):
         node, index = self.search(key)
         node.delete(index)
-        print(node.keys)
+        min = self.max // 2
+
+        if len(node.keys) < min:
+            pass
+
 
 
     def print_tree(self, node=None, indent="", is_last=True):
