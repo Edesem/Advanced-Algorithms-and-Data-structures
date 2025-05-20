@@ -138,6 +138,8 @@ class Tree():
         node.delete(index)
         min = self.max // 2
 
+        sibling = node.parent.children[-1]
+
         if len(node.keys) < min:
             pass
 
