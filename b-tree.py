@@ -17,7 +17,7 @@ class Node():
         return len(self.children) == 0
     
     def delete(self, index):
-        self.keys.pop(index)
+        return self.keys.pop(index)
     
 class Tree():
     def __init__(self, max):
@@ -148,10 +148,14 @@ class Tree():
 
         # Borrow from left
         if left_sibling and left_sibling.get_length() > min:
-            pass
+            left_sibling.keys.sorted()
+            sibling_key = left_sibling.delete(-1)
+            node.insert(sibling_key)
         # Borrow from right
         elif right_sibling and right_sibling.get_length() > min:
-            pass
+            right_sibling.keys.sorted()
+            sibling_key = right_sibling.delete(-1)
+            node.insert(sibling_key)
         # Merge
         else:
             pass
