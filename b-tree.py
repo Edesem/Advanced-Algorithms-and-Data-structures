@@ -135,10 +135,29 @@ class Tree():
 
     def delete(self, key):
         node, index = self.search(key)
+        self.print_tree()
         node.delete(index)
+        
         min = self.max // 2
 
-        sibling = node.parent.children[-1]
+        parent = node.parent
+        index = parent.children.index(node)
+
+        left_sibling = parent.children[index - 1] if index > 0 else None
+        right_sibling = parent.children[index + 1] if index < len(parent.children) - 1 else None
+
+        # Borrow from left
+        if left_sibling and left_sibling.get_length() > min:
+            pass
+        # Borrow from right
+        elif right_sibling and right_sibling.get_length() > min:
+            pass
+        # Merge
+        else:
+            pass
+
+        print(f"index is {index}") 
+        self.print_tree()
 
         if len(node.keys) < min:
             pass
