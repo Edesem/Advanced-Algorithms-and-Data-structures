@@ -184,7 +184,7 @@ class Tree():
 
     def merge(self, left_child, right_child, node, index):
         # Pull down key to left child
-        seperator_key = node.keys[index]
+        seperator_key = node.delete(index)
         left_child.keys.append(seperator_key)
 
         # add right child keys to left child
@@ -194,7 +194,6 @@ class Tree():
             left_child.children.extend(right_child.children)
             
         # Remove seperator key and right child
-        node.delete(index)
         node.children.pop(index + 1)
 
 
@@ -252,7 +251,6 @@ t.insert(14)
 t.insert(15)
 t.insert(16)
 
-t.delete(15)
-t.delete(14)
+t.delete(7)
 
 t.print_tree()
