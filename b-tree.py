@@ -137,8 +137,6 @@ class Tree():
         if node is None:
             node = self.root
 
-        self.print_tree()
-
         if key in node.keys:
             index = node.keys.index(key)
             if node.is_leaf():
@@ -151,7 +149,6 @@ class Tree():
 
                 left_child = node.children[index] 
                 right_child = node.children[index + 1]
-                print(f"left, right: {left_child}, {right_child}")
 
                 # Borrow from left
                 if len(left_child.keys) >= min + 1:
@@ -166,9 +163,8 @@ class Tree():
                     # Merge and recurse
                     merge(left_child, right_child, node, index)
                     self.delete(key, left_child)
-
-                print(f"index is {index}") 
-                self.print_tree()
+                    
+        # If key not in Node
         else:
             for i, value in enumerate(node.keys):
                 if key < value:
