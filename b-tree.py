@@ -134,42 +134,59 @@ class Tree():
         return node, index
 
     def delete(self, key, node=None):
-        node = self.root
+        if node is None:
+            node = self.root
+
         self.print_tree()
 
-        if node.is_leaf():
-            node.delete(index)
-
-        # If node is internal node
-        else:
-            min = self.max // 2
-
-            parent = node.parent
-            index = parent.children.index(node)
-
-            left_sibling = parent.children[index - 1] if index > 0 else None
-            right_sibling = parent.children[index + 1] if index < len(parent.children) - 1 else None
-
-            # Borrow from left
-            if left_sibling and left_sibling.get_length() > min:
-                left_sibling.keys.sorted()
-                sibling_key = left_sibling.delete(-1)
-                node.insert(sibling_key)
-            # Borrow from right
-            elif right_sibling and right_sibling.get_length() > min:
-                right_sibling.keys.sorted()
-                sibling_key = right_sibling.delete(-1)
-                node.insert(sibling_key)
-            # Merge
+        if key in node.keys:
+            index = node.keys.index(key)
+            if node.is_leaf():
+                node.delete(index)
+                
+            # If node is internal node
             else:
-                pass
+                index = node.keys.index(key)
+                min = self.max // 2
 
-            print(f"index is {index}") 
-            self.print_tree()
+                left_child = node.children[index] 
+                right_child = node.children[index + 1]
+                print(f"left, right: {left_child}, {right_child}")
 
-            if len(node.keys) < min:
-                pass
+                # Borrow from left
+                if len(left_child.keys) >= min + 1:
+                    predecessor = self.get_predecessor(left_child)
+                    node.keys[index] = predecessor
+                    self.delete(predecessor, left_child)
+                elif len(right_child.keys) >= min + 1:
+                    successor = self.get_successor(right_child)
+                    node.keys[index] = successor
+                    self.delete(successor, right_child)
+                else:
+                    # Merge and recurse
+                    merge(left_child, right_child, node, index)
+                    self.delete(key, left_child)
 
+                print(f"index is {index}") 
+                self.print_tree()
+        else:
+            for i, value in enumerate(node.keys):
+                if key < value:
+                    return self.delete(key, node.children[i])
+            return self.delete(key, node.children[-1])
+
+    def get_predecessor(self, node):
+        while not node.is_leaf():
+            node = node.children[-1]
+        return node.keys[-1]
+    
+    def get_successor(self, node):
+        while not node.is_leaf():
+            node = node.children[0]
+        return node.keys[0]
+
+    def merge(self):
+        pass
 
 
     def print_tree(self, node=None, indent="", is_last=True):
@@ -231,3 +248,4 @@ print(t.count)
 t.search(15)
 
 t.delete(14)
+t.print_tree()
