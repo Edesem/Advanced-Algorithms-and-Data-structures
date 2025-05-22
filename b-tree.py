@@ -133,40 +133,42 @@ class Tree():
         print(f"Found key ({key}) in {node.keys} at {index}")
         return node, index
 
-    def delete(self, key):
-        node, index = self.search(key)
+    def delete(self, key, node=None):
+        node = self.root
         self.print_tree()
 
         if node.is_leaf():
             node.delete(index)
-        
-        min = self.max // 2
 
-        parent = node.parent
-        index = parent.children.index(node)
-
-        left_sibling = parent.children[index - 1] if index > 0 else None
-        right_sibling = parent.children[index + 1] if index < len(parent.children) - 1 else None
-
-        # Borrow from left
-        if left_sibling and left_sibling.get_length() > min:
-            left_sibling.keys.sorted()
-            sibling_key = left_sibling.delete(-1)
-            node.insert(sibling_key)
-        # Borrow from right
-        elif right_sibling and right_sibling.get_length() > min:
-            right_sibling.keys.sorted()
-            sibling_key = right_sibling.delete(-1)
-            node.insert(sibling_key)
-        # Merge
+        # If node is internal node
         else:
-            pass
+            min = self.max // 2
 
-        print(f"index is {index}") 
-        self.print_tree()
+            parent = node.parent
+            index = parent.children.index(node)
 
-        if len(node.keys) < min:
-            pass
+            left_sibling = parent.children[index - 1] if index > 0 else None
+            right_sibling = parent.children[index + 1] if index < len(parent.children) - 1 else None
+
+            # Borrow from left
+            if left_sibling and left_sibling.get_length() > min:
+                left_sibling.keys.sorted()
+                sibling_key = left_sibling.delete(-1)
+                node.insert(sibling_key)
+            # Borrow from right
+            elif right_sibling and right_sibling.get_length() > min:
+                right_sibling.keys.sorted()
+                sibling_key = right_sibling.delete(-1)
+                node.insert(sibling_key)
+            # Merge
+            else:
+                pass
+
+            print(f"index is {index}") 
+            self.print_tree()
+
+            if len(node.keys) < min:
+                pass
 
 
 
