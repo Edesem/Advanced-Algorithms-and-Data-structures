@@ -188,12 +188,10 @@ class Tree():
         left_child.keys.append(seperator_key)
 
         # add right child keys to left child
-        for key in right_child.keys:
-            left_child.keys.append(key)
+        left_child.keys.extend(right_child.keys)
 
         if not right_child.is_leaf():
-            for child in right_child.children:
-                left_child.children.append(child)
+            left_child.children.extend(right_child.children)
             
         # Remove seperator key and right child
         node.delete(index)
