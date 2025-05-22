@@ -161,9 +161,10 @@ class Tree():
                     self.delete(successor, right_child)
                 else:
                     # Merge and recurse
-                    merge(left_child, right_child, node, index)
+                    print("Merge")
+                    self.merge(left_child, right_child, node, index)
                     self.delete(key, left_child)
-                    
+
         # If key not in Node
         else:
             for i, value in enumerate(node.keys):
@@ -181,8 +182,22 @@ class Tree():
             node = node.children[0]
         return node.keys[0]
 
-    def merge(self):
-        pass
+    def merge(self, left_child, right_child, node, index):
+        # Pull down key to left child
+        seperator_key = node.keys[index]
+        left_child.keys.append(seperator_key)
+
+        # add right child keys to left child
+        for key in right_child.keys:
+            left_child.keys.append(key)
+
+        if not right_child.is_leaf():
+            for child in right_child.children:
+                left_child.children.append(child)
+            
+        # Remove seperator key and right child
+        node.delete(index)
+        node.children.pop(index + 1)
 
 
     def print_tree(self, node=None, indent="", is_last=True):
@@ -202,7 +217,7 @@ class Tree():
 
     
 
-"""
+"""node.delete(index)
 t = Tree(4)
 t.insert(7)
 t.insert(23)
@@ -221,7 +236,7 @@ t.insert(3)
 t.search(2)
 
 
-t = Tree(4)
+t = Tree(3)
 t.insert(1)
 t.insert(2) 
 t.insert(3)
@@ -237,11 +252,9 @@ t.insert(12)
 t.insert(13)
 t.insert(14)
 t.insert(15)
-t.insert(15)
+t.insert(16)
 
-print(t.count)
-
-t.search(15)
-
+t.delete(15)
 t.delete(14)
+
 t.print_tree()
