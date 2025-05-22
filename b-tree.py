@@ -136,7 +136,9 @@ class Tree():
     def delete(self, key):
         node, index = self.search(key)
         self.print_tree()
-        node.delete(index)
+
+        if node.is_leaf():
+            node.delete(index)
         
         min = self.max // 2
 
