@@ -134,6 +134,7 @@ class Tree():
         return node, index
 
     def delete(self, key, node=None):
+        # When called for the first time
         if node is None:
             node = self.root
 
