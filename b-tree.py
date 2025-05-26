@@ -172,12 +172,34 @@ class Tree():
                     self.merge(left_child, right_child, node, index)
                     self.delete(key, left_child)
 
-        # If key not in Node
+        # When key not in node
         else:
-            for i, value in enumerate(node.keys):
-                if key < value:
-                    return self.delete(key, node.children[i])
-            return self.delete(key, node.children[-1])
+            i = 0
+            while i < len(node.keys) and key >= node.keys[i]:
+                i += 1
+
+            child = node.children[i]
+
+            # Case 3b
+            if child.get_length() == self.min:
+                print("3b", key)
+
+                left_sibling = node.children[i - 1] if i > 0 else None
+                right_sibling = node.children[i + 1] if i + 1 < len(node.children) else None
+
+                if left_sibling and left_sibling.get_length() == self.min:
+                    self.merge(left_sibling, child, node, i - 1)
+                    return self.delete(key, left_sibling)
+                
+                elif right_sibling and right_sibling.get_length() == self.min:
+                    self.merge(child, right_sibling, node, i)
+                    return self.delete(key, child)
+                
+                
+                
+            t.print_tree()
+
+            return self.delete(key, child)
 
     def get_predecessor(self, node):
         while not node.is_leaf():
@@ -259,5 +281,19 @@ t.insert(15)
 t.insert(16)
 
 t.delete(7)
+
+t.print_tree()
+
+t = Tree(3)
+for key in ["A", "B", "C", "D", "E", "F", "G", "H", "I"]:
+    t.insert(key)
+
+t.print_tree()
+
+t.delete("C")
+t.delete("I")
+t.delete("H")
+t.delete("G")
+t.delete("B")
 
 t.print_tree()
