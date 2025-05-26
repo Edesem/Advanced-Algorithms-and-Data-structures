@@ -20,12 +20,12 @@ class Node():
         return self.keys.pop(index)
     
 class Tree():
-    def __init__(self, max):
+    def __init__(self, t):
         self.root = None
         self.count = 0
-        self.max = max
+        self.max = t * 2
+        self.min = t - 1
         self.set = set()
-        self.min = self.max // 2
         
     def insert(self, key, node=None):
         if key not in self.set:
@@ -147,7 +147,8 @@ class Tree():
                     node.delete(index)
                 # Case 3
                 else:
-                    pass
+                    print(node.parent)
+                    print(self.get_successor(node.parent))
                 
             # Case 2
             else:
