@@ -25,6 +25,7 @@ class Tree():
         self.count = 0
         self.max = max
         self.set = set()
+        self.min = self.max // 2
         
     def insert(self, key, node=None):
         if key not in self.set:
@@ -141,28 +142,32 @@ class Tree():
         if key in node.keys:
             index = node.keys.index(key)
             if node.is_leaf():
-                node.delete(index)
+                # Case 1
+                if node.get_length() > self.min:
+                    node.delete(index)
+                # Case 3
+                else:
+                    pass
                 
-            # If node is internal node
+            # Case 2
             else:
                 index = node.keys.index(key)
-                min = self.max // 2
 
                 left_child = node.children[index] 
                 right_child = node.children[index + 1]
 
-                # Borrow from left
+                # Case 2a, borrow from the predecessor
                 if len(left_child.keys) >= min + 1:
                     predecessor = self.get_predecessor(left_child)
                     node.keys[index] = predecessor
                     self.delete(predecessor, left_child)
+                # Case 2b, borrow from sucessor
                 elif len(right_child.keys) >= min + 1:
                     successor = self.get_successor(right_child)
                     node.keys[index] = successor
                     self.delete(successor, right_child)
+                # Case 2c, merging
                 else:
-                    # Merge and recurse
-                    print("Merge")
                     self.merge(left_child, right_child, node, index)
                     self.delete(key, left_child)
 
