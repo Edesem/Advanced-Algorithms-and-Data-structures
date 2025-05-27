@@ -226,6 +226,7 @@ class Tree():
         # Remove seperator key and right child
         node.children.pop(index + 1)
 
+        # Prevents root being empty after a merge
         if self.root.get_length() == 0 and not self.root.is_leaf():
             self.root = self.root.children[0]
             self.root.parent = None
