@@ -1,3 +1,5 @@
+from string import ascii_uppercase
+
 class Node():
     def __init__(self, key=None):
         if key is None:
@@ -38,9 +40,6 @@ class Tree():
         if self.root is None:
             self.root = Node(key)
             self.count += 1
-            print(f"Inserted key {key}")
-            self.print_tree()
-            print()
             return
     
         node = self._node_to_insert(key, self.root)
@@ -49,10 +48,6 @@ class Tree():
         self.count += 1
         if node.get_length() >= self.max:
             self.split(node)
-
-        #print(f"Inserted key {key}")
-        #self.print_tree()
-        #print()
 
     # Find node to insert into
     def _node_to_insert(self, key, node):
@@ -145,10 +140,21 @@ class Tree():
                 # Case 1
                 if node.get_length() > self.min:
                     node.delete(index)
-                # Case 3
+                # Case 3a
                 else:
-                    print(node.parent)
-                    print(self.get_successor(node.parent))
+                    print(f"Deleting {node.keys}")
+                    parent = node.parent
+                    i = 0
+                    while i < len(parent.children) and parent.children[i] != node:
+                        i += 1
+
+                    self.fix_child_if_needed(parent, i)
+
+                    # Re-access node via index (not reference)
+                    node = parent.children[i]
+                    if key in node.keys:
+                        node.delete(node.keys.index(key))
+
                 
             # Case 2
             else:
@@ -158,12 +164,12 @@ class Tree():
                 right_child = node.children[index + 1]
 
                 # Case 2a, borrow from the predecessor
-                if len(left_child.keys) >= min + 1:
+                if len(left_child.keys) >= self.min + 1:
                     predecessor = self.get_predecessor(left_child)
                     node.keys[index] = predecessor
                     self.delete(predecessor, left_child)
                 # Case 2b, borrow from sucessor
-                elif len(right_child.keys) >= min + 1:
+                elif len(right_child.keys) >= self.min + 1:
                     successor = self.get_successor(right_child)
                     node.keys[index] = successor
                     self.delete(successor, right_child)
@@ -177,30 +183,43 @@ class Tree():
             i = 0
             while i < len(node.keys) and key >= node.keys[i]:
                 i += 1
-
             child = node.children[i]
 
-            # Case 3b
-            if child.get_length() == self.min:
-                print("3b", key)
-                print(child.keys)
+            self.fix_child_if_needed(node, i)
 
-                left_sibling = node.children[i - 1] if i > 0 else None
-                right_sibling = node.children[i + 1] if i + 1 < len(node.children) else None
+            # Step 2: recompute i after merge
+            i = 0
+            while i < len(node.keys) and key >= node.keys[i]:
+                i += 1
 
-                if left_sibling and left_sibling.get_length() == self.min:
-                    self.merge(left_sibling, child, node, i - 1)
-                    return self.delete(key, left_sibling)
-                
-                elif right_sibling and right_sibling.get_length() == self.min:
-                    self.merge(child, right_sibling, node, i)
-                    return self.delete(key, child)
-                
-                
-                
-            t.print_tree()
+            # Step 3: descend safely
+            return self.delete(key, node.children[i])
+            
+    def fix_child_if_needed(self, parent, i):
+        child = parent.children[i]
+        if child.get_length() == self.min:
+            left_sibling = parent.children[i - 1] if i > 0 else None
+            right_sibling = parent.children[i + 1] if i + 1 < len(parent.children) else None
 
-            return self.delete(key, child)
+            # Case 3a: borrow from left
+            if left_sibling and left_sibling.get_length() > self.min:
+                borrowed_key = left_sibling.keys.pop(-1)
+                parent_key = parent.keys[i - 1]
+                parent.keys[i - 1] = borrowed_key
+                child.keys.insert(0, parent_key)
+
+            # Case 3a: borrow from right
+            elif right_sibling and right_sibling.get_length() > self.min:
+                borrowed_key = right_sibling.keys.pop(0)
+                parent_key = parent.keys[i]
+                parent.keys[i] = borrowed_key
+                child.keys.append(parent_key)
+
+            # Case 3b: merge
+            elif left_sibling:
+                self.merge(left_sibling, child, parent, i - 1)
+            elif right_sibling:
+                self.merge(child, right_sibling, parent, i)
 
     def get_predecessor(self, node):
         while not node.is_leaf():
@@ -268,7 +287,7 @@ t.insert(3)
 t.search(2)
 
 
-t = Tree(3)
+t = Tree(2)
 t.insert(1)
 t.insert(2) 
 t.insert(3)
@@ -290,16 +309,32 @@ t.delete(7)
 
 t.print_tree()
 
-t = Tree(3)
-for key in ["A", "B", "C", "D", "E", "F", "G", "H", "I"]:
+t = Tree(2)
+for key in ascii_uppercase:  # 'A' to 'Z'
     t.insert(key)
 
+print("COMPLETE TREE")
 t.print_tree()
 
 t.delete("C")
-t.delete("I")
-t.delete("H")
-t.delete("G")
-t.delete("B")
+t.print_tree()
 
+t.delete("I")
+t.print_tree()
+
+t.delete("H")
+print("delete H")
+t.print_tree()
+
+t.delete("G")
+print("delete G")
+t.print_tree()
+
+t.delete("B")
+print("delete B")
+t.print_tree()
+
+
+t.delete("A")
+print("delete A")
 t.print_tree()
