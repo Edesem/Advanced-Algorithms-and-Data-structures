@@ -183,6 +183,7 @@ class Tree():
             # Case 3b
             if child.get_length() == self.min:
                 print("3b", key)
+                print(child.keys)
 
                 left_sibling = node.children[i - 1] if i > 0 else None
                 right_sibling = node.children[i + 1] if i + 1 < len(node.children) else None
@@ -224,6 +225,10 @@ class Tree():
             
         # Remove seperator key and right child
         node.children.pop(index + 1)
+
+        if self.root.get_length() == 0 and not self.root.is_leaf():
+            self.root = self.root.children[0]
+            self.root.parent = None
 
 
     def print_tree(self, node=None, indent="", is_last=True):
