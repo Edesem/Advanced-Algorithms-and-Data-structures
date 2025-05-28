@@ -183,7 +183,6 @@ class Tree():
             i = 0
             while i < len(node.keys) and key >= node.keys[i]:
                 i += 1
-            child = node.children[i]
 
             self.fix_child_if_needed(node, i)
 
@@ -276,7 +275,7 @@ t.insert(59)
 t.insert(73)
 t.insert(93)
 t.insert(25)
-"""
+
 t = Tree(2)
 t.search(1)
 
@@ -305,36 +304,24 @@ t.insert(14)
 t.insert(15)
 t.insert(16)
 
+
 t.delete(7)
 
 t.print_tree()
+"""
 
 t = Tree(2)
 for key in ascii_uppercase:  # 'A' to 'Z'
     t.insert(key)
+    print(f"INSERTING {key}")
+    t.print_tree()
 
-print("COMPLETE TREE")
+
+print("\n\n\nCOMPLETE TREE")
 t.print_tree()
 
-t.delete("C")
-t.print_tree()
+for key in ["C", "I", "H", "G", "B", "A"]:
+    print(f"\nDeleting {key}")
+    t.delete(key)
+    t.print_tree()
 
-t.delete("I")
-t.print_tree()
-
-t.delete("H")
-print("delete H")
-t.print_tree()
-
-t.delete("G")
-print("delete G")
-t.print_tree()
-
-t.delete("B")
-print("delete B")
-t.print_tree()
-
-
-t.delete("A")
-print("delete A")
-t.print_tree()
