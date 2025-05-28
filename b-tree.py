@@ -10,7 +10,15 @@ class Node():
         self.parent = None
 
     def insert(self, key):
-        self.keys.append(key)
+        # Binary search to find insertion index
+        low, high = 0, len(self.keys)
+        while low < high:
+            mid = (low + high) // 2
+            if self.keys[mid] < key:
+                low = mid + 1
+            else:
+                high = mid
+        self.keys.insert(low, key)
 
     def get_length(self):
         return len(self.keys)
