@@ -33,7 +33,7 @@ class Tree():
     def __init__(self, t):
         self.root = None
         self.count = 0
-        self.max = t * 2
+        self.max = (t * 2) - 1
         self.min = t - 1
         self.set = set()
         
@@ -52,10 +52,13 @@ class Tree():
     
         node = self._node_to_insert(key, self.root)
 
-        node.insert(key)
-        self.count += 1
         if node.get_length() >= self.max:
             self.split(node)
+
+            node = self._node_to_insert(key, self.root)
+
+        node.insert(key)
+        self.count += 1
 
     # Find node to insert into
     def _node_to_insert(self, key, node):
@@ -74,7 +77,7 @@ class Tree():
         keys = node.keys
         keys.sort()
 
-        median_index = len(keys) // 2 if len(keys) % 2 != 0 else len(keys) // 2 - 1
+        median_index = len(keys) // 2
         median = keys[median_index]
 
         # Left node
@@ -82,7 +85,6 @@ class Tree():
         right = Node()
         left.keys = keys[:median_index]
         right.keys = keys[median_index+1:]
-
             
         # Carry over children if internal node
         if node.children:
@@ -110,9 +112,8 @@ class Tree():
             left.parent = right.parent = parent
             parent.insert(median)
 
-
         # If parent now overflows, split it too
-        if parent and len(parent.keys) > self.max:
+        if parent and len(parent.keys) >= self.max:
             self.split(parent)
 
     def search(self, key):
@@ -188,18 +189,15 @@ class Tree():
 
         # When key not in node
         else:
+            # Step 1: find child index
             i = 0
             while i < len(node.keys) and key >= node.keys[i]:
                 i += 1
 
-            self.fix_child_if_needed(node, i)
+            # Step 2: fix underflow before descending
+            i = self.fix_child_if_needed(node, i)
 
-            # Step 2: recompute i after merge
-            i = 0
-            while i < len(node.keys) and key >= node.keys[i]:
-                i += 1
-
-            # Step 3: descend safely
+            # Step 4: descend safely
             return self.delete(key, node.children[i])
             
     def fix_child_if_needed(self, parent, i):
@@ -214,6 +212,7 @@ class Tree():
                 parent_key = parent.keys[i - 1]
                 parent.keys[i - 1] = borrowed_key
                 child.keys.insert(0, parent_key)
+                return i
 
             # Case 3a: borrow from right
             elif right_sibling and right_sibling.get_length() > self.min:
@@ -221,12 +220,17 @@ class Tree():
                 parent_key = parent.keys[i]
                 parent.keys[i] = borrowed_key
                 child.keys.append(parent_key)
+                return i
 
             # Case 3b: merge
             elif left_sibling:
                 self.merge(left_sibling, child, parent, i - 1)
+                return i - 1
             elif right_sibling:
                 self.merge(child, right_sibling, parent, i)
+                return i
+            
+        return i
 
     def get_predecessor(self, node):
         while not node.is_leaf():
@@ -316,7 +320,7 @@ t.insert(16)
 t.delete(7)
 
 t.print_tree()
-"""
+
 
 t = Tree(2)
 for key in ascii_uppercase:  # 'A' to 'Z'
@@ -333,3 +337,19 @@ for key in ["C", "I", "H", "G", "B", "A"]:
     t.delete(key)
     t.print_tree()
 
+"""
+
+t = Tree(3)
+for key in [47, 13, 82, 59, 6, 91, 34, 28, 75, 99, 4, 66, 51, 88, 22, 39, 15, 93, 11, 70, 61, 62, 63, 64]: 
+    t.insert(key)
+    print(f"INSERTING {key}")
+    t.print_tree()
+
+
+print("\n\n\nCOMPLETE TREE")
+t.print_tree()
+
+for key in ["C", "I", "H", "G", "B", "A"]:
+    print(f"\nDeleting {key}")
+    t.delete(key)
+    t.print_tree()
