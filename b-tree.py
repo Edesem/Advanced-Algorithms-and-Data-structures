@@ -66,7 +66,7 @@ class Tree():
         keys = node.keys
         keys.sort()
 
-        median_index = len(keys) // 2
+        median_index = len(keys) // 2 if len(keys) % 2 != 0 else len(keys) // 2 - 1
         median = keys[median_index]
 
         # Left node
