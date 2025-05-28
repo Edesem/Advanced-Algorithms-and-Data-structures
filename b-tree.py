@@ -279,48 +279,7 @@ class Tree():
 
     
 
-"""node.delete(index)
-t = Tree(4)
-t.insert(7)
-t.insert(23)
-t.insert(59)
-t.insert(73)
-t.insert(93)
-t.insert(25)
-
-t = Tree(2)
-t.search(1)
-
-t = Tree(2)
-t.insert(1)
-t.insert(2)
-t.insert(3)
-t.search(2)
-
-
-t = Tree(2)
-t.insert(1)
-t.insert(2) 
-t.insert(3)
-t.insert(4)
-t.insert(5)
-t.insert(6)
-t.insert(7)
-t.insert(8)
-t.insert(9)
-t.insert(10)
-t.insert(11)
-t.insert(12)
-t.insert(13)
-t.insert(14)
-t.insert(15)
-t.insert(16)
-
-
-t.delete(7)
-
-t.print_tree()
-
+"""
 
 t = Tree(2)
 for key in ascii_uppercase:  # 'A' to 'Z'
@@ -340,7 +299,7 @@ for key in ["C", "I", "H", "G", "B", "A"]:
 """
 
 t = Tree(3)
-for key in [47, 13, 82, 59, 6, 91, 34, 28, 75, 99, 4, 66, 51, 88, 22, 39, 15, 93, 11, 70, 61, 62, 63, 64]: 
+for key in [47, 13, 82, 59, 6, 91, 34, 28, 75, 99, 4, 66, 51, 88, 22, 39, 15, 93, 11, 70, 61, 62, 63, 64, 40]: 
     t.insert(key)
     print(f"INSERTING {key}")
     t.print_tree()
