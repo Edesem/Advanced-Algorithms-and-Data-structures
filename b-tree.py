@@ -1,5 +1,3 @@
-from string import ascii_uppercase
-
 class Node():
     def __init__(self, key=None):
         if key is None:
