@@ -306,7 +306,7 @@ for key in [47, 13, 82, 59, 6, 91, 34, 28, 75, 99, 4, 66, 51, 88, 22, 39, 15, 93
 print("\n\n\nCOMPLETE TREE")
 t.print_tree()
 
-for key in ["C", "I", "H", "G", "B", "A"]:
+for key in [47, 28]:
     print(f"\nDeleting {key}")
     t.delete(key)
     t.print_tree()
