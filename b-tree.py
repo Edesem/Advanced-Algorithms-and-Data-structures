@@ -200,7 +200,7 @@ class Tree():
             
     def fix_child_if_needed(self, parent, i):
         child = parent.children[i]
-        if child.get_length() == self.min:
+        if child.get_length() < self.min:
             left_sibling = parent.children[i - 1] if i > 0 else None
             right_sibling = parent.children[i + 1] if i + 1 < len(parent.children) else None
 
@@ -252,7 +252,7 @@ class Tree():
             left_child.children.extend(right_child.children)
             
         # Remove seperator key and right child
-        node.children.pop(index + 1)
+        node.children.delete(index + 1)
 
         # Prevents root being empty after a merge
         if self.root.get_length() == 0 and not self.root.is_leaf():
@@ -288,9 +288,7 @@ for key in ascii_uppercase:  # 'A' to 'Z'
 
 print("\n\n\nCOMPLETE TREE")
 t.print_tree()
-
-for key in ["C", "I", "H", "G", "B", "A"]:
-    print(f"\nDeleting {key}")
+            self.print_tree() {key}")
     t.delete(key)
     t.print_tree()
 
@@ -306,7 +304,7 @@ for key in [47, 13, 82, 59, 6, 91, 34, 28, 75, 99, 4, 66, 51, 88, 22, 39, 15, 93
 print("\n\n\nCOMPLETE TREE")
 t.print_tree()
 
-for key in [47, 28]:
+for key in [47, 75, 70, 66]:
     print(f"\nDeleting {key}")
     t.delete(key)
     t.print_tree()
