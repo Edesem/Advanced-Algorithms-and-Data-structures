@@ -36,6 +36,9 @@ def millerRabinRandomisedPrimality(n,k):
             if x == 1:
                 # x_j == 1 and x_{j-1} != 1 and != n-1
                 return False
+            
+        else:
+            return False  # Composite
     
     # If n has passed all tests, then it's probably a prime
     return True
