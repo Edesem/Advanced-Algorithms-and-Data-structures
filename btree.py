@@ -51,7 +51,7 @@ class Tree():
         node = self._node_to_insert(key, self.root)
 
         if node.get_length() >= self.max:
-            self.split(node)
+            self._split(node)
 
             node = self._node_to_insert(key, self.root)
 
@@ -71,7 +71,7 @@ class Tree():
         return node
     
     # Split specified node up
-    def split(self, node):
+    def _split(self, node):
         keys = node.keys
         keys.sort()
 
@@ -112,7 +112,7 @@ class Tree():
 
         # If parent now overflows, split it too
         if parent and len(parent.keys) >= self.max:
-            self.split(parent)
+            self._split(parent)
 
     def search(self, key):
         if key not in self.set:
@@ -159,13 +159,12 @@ class Tree():
                     while i < len(parent.children) and parent.children[i] != node:
                         i += 1
 
-                    self.fix_child_if_needed(parent, i)
+                    self._fix_child_if_needed(parent, i)
 
                     # Re-access node via index (not reference)
                     node = parent.children[i]
                     if key in node.keys:
                         node.delete(node.keys.index(key))
-
                 
             # Case 2
             else:
@@ -176,17 +175,17 @@ class Tree():
 
                 # Case 2a, borrow from the predecessor
                 if len(left_child.keys) >= self.min + 1:
-                    predecessor = self.get_predecessor(left_child)
+                    predecessor = self._get_predecessor(left_child)
                     node.keys[index] = predecessor
                     self.delete(predecessor, left_child)
                 # Case 2b, borrow from sucessor
                 elif len(right_child.keys) >= self.min + 1:
-                    successor = self.get_successor(right_child)
+                    successor = self._get_successor(right_child)
                     node.keys[index] = successor
                     self.delete(successor, right_child)
                 # Case 2c, merging
                 else:
-                    self.merge(left_child, right_child, node, index)
+                    self._merge(left_child, right_child, node, index)
                     self.delete(key, left_child)
 
         # When key not in node
@@ -197,12 +196,12 @@ class Tree():
                 i += 1
 
             # Step 2: fix underflow before descending
-            i = self.fix_child_if_needed(node, i)
+            i = self._fix_child_if_needed(node, i)
 
             # Step 4: descend safely
             return self.delete(key, node.children[i])
             
-    def fix_child_if_needed(self, parent, i):
+    def _fix_child_if_needed(self, parent, i):
         child = parent.children[i]
         if child.get_length() < self.min:
             left_sibling = parent.children[i - 1] if i > 0 else None
@@ -226,25 +225,25 @@ class Tree():
 
             # Case 3b: merge
             elif left_sibling:
-                self.merge(left_sibling, child, parent, i - 1)
+                self._merge(left_sibling, child, parent, i - 1)
                 return i - 1
             elif right_sibling:
-                self.merge(child, right_sibling, parent, i)
+                self._merge(child, right_sibling, parent, i)
                 return i
             
         return i
 
-    def get_predecessor(self, node):
+    def _get_predecessor(self, node):
         while not node.is_leaf():
             node = node.children[-1]
         return node.keys[-1]
     
-    def get_successor(self, node):
+    def _get_successor(self, node):
         while not node.is_leaf():
             node = node.children[0]
         return node.keys[0]
 
-    def merge(self, left_child, right_child, node, index):
+    def _merge(self, left_child, right_child, node, index):
         # Pull down key to left child
         seperator_key = node.delete(index)
         left_child.keys.append(seperator_key)
