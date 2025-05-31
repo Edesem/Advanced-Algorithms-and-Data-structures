@@ -152,6 +152,7 @@ class Tree():
                 # Case 1
                 if node.get_length() > self.min:
                     node.delete(index)
+                    self.set.discard(key)
                 
             # Case 2
             else:
