@@ -289,12 +289,12 @@ class Tree():
                 self.keysInRange(x, y, node.children[i + 1], keys)
 
                 # Visit
-                if key >= x and key <= y:
+                if x <= key <= y:
                     keys.append(key)
 
         else:
             for i, key in enumerate(node.keys):
-                if key >= x and key <= y:
+                if x <= key <= y:
                     keys.append(key)
 
         # None found
