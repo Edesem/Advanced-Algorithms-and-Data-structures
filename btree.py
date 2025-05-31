@@ -291,8 +291,8 @@ class Tree():
                 if x <= key <= y:
                     keys.append(key)
 
-            # Traverse right
-            self.keysInRange(x, y, node.children[i + 1], keys)
+            # Traverse right-most branch
+            self.keysInRange(x, y, node.children[len(node.keys)], keys)
 
         else:
             for i, key in enumerate(node.keys):
