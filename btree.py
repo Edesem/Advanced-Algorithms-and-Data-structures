@@ -263,7 +263,6 @@ class Tree():
             self.root = self.root.children[0]
             self.root.parent = None
 
-
     def print_tree(self, node=None, indent="", is_last=True):
         if node is None:
             node = self.root
@@ -294,5 +293,3 @@ def main():
         print(f"\nDeleting {key}")
         t.delete(key)
         t.print_tree()
-
-main()
