@@ -275,36 +275,18 @@ class Tree():
                 is_last_child = (i == len(node.children) - 1)
                 self.print_tree(child, indent + ("    " if is_last else "│   "), is_last_child)
 
-    
+def main():    
+    t = Tree(3)
+    for key in [47, 13, 82, 59, 6, 91, 34, 28, 75, 99, 4, 66, 51, 88, 22, 39, 15, 93, 11, 70, 61, 62, 63, 64, 40]: 
+        t.insert(key)
+        print(f"INSERTING {key}")
+        t.print_tree()
 
-"""
 
-t = Tree(2)
-for key in ascii_uppercase:  # 'A' to 'Z'
-    t.insert(key)
-    print(f"INSERTING {key}")
+    print("\n\n\nCOMPLETE TREE")
     t.print_tree()
 
-
-print("\n\n\nCOMPLETE TREE")
-t.print_tree()
-            self.print_tree() {key}")
-    t.delete(key)
-    t.print_tree()
-
-"""
-
-t = Tree(3)
-for key in [47, 13, 82, 59, 6, 91, 34, 28, 75, 99, 4, 66, 51, 88, 22, 39, 15, 93, 11, 70, 61, 62, 63, 64, 40]: 
-    t.insert(key)
-    print(f"INSERTING {key}")
-    t.print_tree()
-
-
-print("\n\n\nCOMPLETE TREE")
-t.print_tree()
-
-for key in [47, 75, 70, 66]:
-    print(f"\nDeleting {key}")
-    t.delete(key)
-    t.print_tree()
+    for key in [47, 75, 70, 66]:
+        print(f"\nDeleting {key}")
+        t.delete(key)
+        t.print_tree()
