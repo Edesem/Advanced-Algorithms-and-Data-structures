@@ -104,10 +104,10 @@ class Tree():
 
         # case 2: promote median to parent
         else:
-            idx = parent.children.index(node)
-            parent.children.pop(idx)
-            parent.children.insert(idx, left)
-            parent.children.insert(idx + 1, right)
+            index = parent.children.index(node)
+            parent.children.pop(index)
+            parent.children.insert(index, left)
+            parent.children.insert(index + 1, right)
             left.parent = right.parent = parent
             parent.insert(median)
 
