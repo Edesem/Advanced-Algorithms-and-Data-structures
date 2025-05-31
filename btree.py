@@ -267,6 +267,47 @@ class Tree():
                 is_last_child = (i == len(node.children) - 1)
                 self.print_tree(child, indent + ("    " if is_last else "│   "), is_last_child)
 
+    def select(self, k, node=None):
+        pass
+
+    def rank(self, x, node=None):
+        pass
+
+    def keysInRange(self, x, y, node=None, keys=None):
+        # Uses in order tree traversal as basis
+        if keys == None:
+            keys = []
+ 
+        if node == None:
+            node = self.root
+
+        if not node.is_leaf():
+            for i, key in enumerate(node.keys):
+                print(x, key)
+
+                # Traverse
+                if x < key:
+                    self.keysInRange(x, y, node.children[i], keys)
+                self.keysInRange(x, y, node.children[i + 1], keys)
+
+                # Visit
+                if key >= x and key <= y:
+                    keys.append(key)
+
+        else:
+            print("LEAF")
+            for i, key in enumerate(node.keys):
+                if key >= x and key <= y:
+                    keys.append(key)
+
+        # None found
+        if len(keys) == 0:
+            return -1
+        return keys
+
+    def primesInRange(self, x, y, node=None):
+        pass
+
 def main():    
     t = Tree(3)
     for key in [47, 13, 82, 59, 6, 91, 34, 28, 75, 99, 4, 66, 51, 88, 22, 39, 15, 93, 11, 70, 61, 62, 63, 64, 40]: 
