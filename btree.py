@@ -152,19 +152,6 @@ class Tree():
                 # Case 1
                 if node.get_length() > self.min:
                     node.delete(index)
-                # Case 3a
-                else:
-                    parent = node.parent
-                    i = 0
-                    while i < len(parent.children) and parent.children[i] != node:
-                        i += 1
-
-                    self._fix_child_if_needed(parent, i)
-
-                    # Re-access node via index (not reference)
-                    node = parent.children[i]
-                    if key in node.keys:
-                        node.delete(node.keys.index(key))
                 
             # Case 2
             else:
@@ -190,25 +177,34 @@ class Tree():
 
         # When key not in node
         else:
-            # Step 1: find child index
+            # Find child index
             i = 0
             while i < len(node.keys) and key >= node.keys[i]:
                 i += 1
 
-            # Step 2: fix underflow before descending
+            # Fix underflow before descending
             i = self._fix_child_if_needed(node, i)
 
-            # Step 4: descend safely
+            # Descend safely
             return self.delete(key, node.children[i])
             
     def _fix_child_if_needed(self, parent, i):
         child = parent.children[i]
-        if child.get_length() < self.min:
+        if child.get_length() <= self.min:
+            print(child.keys)
             left_sibling = parent.children[i - 1] if i > 0 else None
             right_sibling = parent.children[i + 1] if i + 1 < len(parent.children) else None
 
+            # Case 3b: Merge
+            if left_sibling and left_sibling.get_length() == self.min:
+                self._merge(left_sibling, child, parent, i - 1)
+                return i - 1
+            elif right_sibling and right_sibling.get_length() == self.min:
+                self._merge(child, right_sibling, parent, i)
+                return i
+
             # Case 3a: borrow from left
-            if left_sibling and left_sibling.get_length() > self.min:
+            elif left_sibling and left_sibling.get_length() > self.min:
                 borrowed_key = left_sibling.keys.pop(-1)
                 parent_key = parent.keys[i - 1]
                 parent.keys[i - 1] = borrowed_key
@@ -223,14 +219,6 @@ class Tree():
                 child.keys.append(parent_key)
                 return i
 
-            # Case 3b: merge
-            elif left_sibling:
-                self._merge(left_sibling, child, parent, i - 1)
-                return i - 1
-            elif right_sibling:
-                self._merge(child, right_sibling, parent, i)
-                return i
-            
         return i
 
     def _get_predecessor(self, node):
@@ -251,12 +239,13 @@ class Tree():
         # add right child keys to left child
         left_child.keys.extend(right_child.keys)
 
+        # Add all the children of the right node to the left node
         if not right_child.is_leaf():
             left_child.children.extend(right_child.children)
             
-        # Remove seperator key and right child
-        node.children.delete(index + 1)
-
+        # Remove right child
+        node.children.pop(node.children.index(right_child))
+        
         # Prevents root being empty after a merge
         if self.root.get_length() == 0 and not self.root.is_leaf():
             self.root = self.root.children[0]
