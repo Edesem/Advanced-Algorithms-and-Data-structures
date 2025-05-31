@@ -137,6 +137,10 @@ class Tree():
         return node, index
 
     def delete(self, key, node=None):
+        if key not in self.set:
+            print(f"Key {key} not found in tree.")
+            return 
+        
         # When called for the first time
         if node is None:
             node = self.root
@@ -286,7 +290,9 @@ def main():
     print("\n\n\nCOMPLETE TREE")
     t.print_tree()
 
-    for key in [47, 75, 70, 66]:
+    for key in [47, 75, 70, 66, 1]:
         print(f"\nDeleting {key}")
         t.delete(key)
         t.print_tree()
+
+main()
