@@ -32,7 +32,7 @@ class Node():
 class Tree():
     def __init__(self, t):
         self.root = None
-        self.count = 0
+        self.count = 0 # Debugging purposes
         self.max = (t * 2) - 1
         self.min = t - 1
         self.t = t
