@@ -381,7 +381,7 @@ class Tree():
 
     def primesInRange(self, x, y, node=None, keys=None):
         # Uses in order tree traversal as basis
-        
+
         if keys == None:
             keys = []
  
@@ -412,8 +412,10 @@ class Tree():
         return keys
     
     def _is_prime(self, n):
+        # Miller-Rabin-Randomised-Primality-Checker
+
         # Number of iterations (Hard coded for simplicity)
-        k = 10
+        k = 20
 
         # Special case
         if n == 2 or n == 3:
