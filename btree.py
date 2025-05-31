@@ -273,7 +273,7 @@ class Tree():
     def select(self, k, node=None, counter=None):        
         if counter == None:
             # So it is mutable and persists during recursion
-            counter = [0]
+            counter = [1]
         
         # Uses in order tree traversal as basis
         if node == None:
@@ -293,7 +293,7 @@ class Tree():
                 counter[0] += 1
 
             # Traverse right-most branch
-            self.select(k, node.children[len(node.keys)], counter)
+            res = self.select(k, node.children[len(node.keys)], counter)
             if res != -1:
                 return res
 
