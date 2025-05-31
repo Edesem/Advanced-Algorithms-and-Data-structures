@@ -283,7 +283,6 @@ class Tree():
 
         if not node.is_leaf():
             for i, key in enumerate(node.keys):
-                print(f"Branch {key}")
                 # Traverse left
                 if x < key:
                     self.keysInRange(x, y, node.children[i], keys)
@@ -296,9 +295,7 @@ class Tree():
             self.keysInRange(x, y, node.children[i + 1], keys)
 
         else:
-            print(node.keys)
             for i, key in enumerate(node.keys):
-                print(f"Leaf {key}")
                 if x <= key <= y:
                     keys.append(key)
 
