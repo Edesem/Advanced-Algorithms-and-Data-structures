@@ -270,14 +270,10 @@ class Tree():
                 is_last_child = (i == len(node.children) - 1)
                 self.print_tree(child, indent + ("    " if is_last else "│   "), is_last_child)
 
-    def select(self, k, node=None):
-        # If key not in tree
-        if x not in self.set: 
-            return -1
-        
-        if rank == None:
+    def select(self, k, node=None, counter=None):        
+        if counter == None:
             # So it is mutable and persists during recursion
-            rank = [0]
+            counter = [0]
         
         # Uses in order tree traversal as basis
         if node == None:
@@ -286,28 +282,24 @@ class Tree():
         if not node.is_leaf():
             for i, key in enumerate(node.keys):
                 # Go left
-                self.rank(x, node.children[i], rank)
+                self.select(k, node.children[i], counter)
+                counter[0] += 1
 
-                # Visit
-                if key < x:
-                    rank[0] += 1
-                elif key == x:
-                    rank[0] += 1
-                    return rank[0]
+                if counter[0] == k:
+                    return key
 
             # Traverse right-most branch
-            self.rank(x, node.children[len(node.keys)], rank)
+            self.select(k, node.children[len(node.keys)], counter)
+            counter[0] += 1
 
         else:
             for key in node.keys:
                 # Visit
-                if key < x:
-                    rank[0] += 1
-                elif key == x:
-                    rank[0] += 1
-                    return rank[0]
+                counter[0] += 1
+                if counter[0] == k:
+                    return key
 
-        return rank[0]
+        return key
 
     def rank(self, x, node=None, rank=None):
         # If key not in tree
