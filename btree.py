@@ -155,6 +155,7 @@ class Tree():
                 if node.get_length() > self.min:
                     node.delete(index)
                     self.set.discard(key)
+                    self.count -= 1
                 
             # Case 2
             else:
@@ -272,8 +273,43 @@ class Tree():
     def select(self, k, node=None):
         pass
 
-    def rank(self, x, node=None):
-        pass
+    def rank(self, x, node=None, rank=None):
+        # If key not in tree
+        if x not in self.set: 
+            return -1
+        
+        if rank == None:
+            # So it is mutable and persists during recursion
+            rank = [0]
+        
+        # Uses in order tree traversal as basis
+        if node == None:
+            node = self.root
+
+        if not node.is_leaf():
+            for i, key in enumerate(node.keys):
+                self.rank(x, node.children[i], rank)
+
+                # Visit
+                if key < x:
+                    rank[0] += 1
+                elif key == x:
+                    rank[0] += 1
+                    return rank[0]
+
+            # Traverse right-most branch
+            self.rank(x, node.children[len(node.keys)], rank)
+
+        else:
+            for key in node.keys:
+                # Visit
+                if key < x:
+                    rank[0] += 1
+                elif key == x:
+                    rank[0] += 1
+                    return rank[0]
+
+        return rank[0]
 
     def keysInRange(self, x, y, node=None, keys=None):
         # Uses in order tree traversal as basis
@@ -297,7 +333,7 @@ class Tree():
             self.keysInRange(x, y, node.children[len(node.keys)], keys)
 
         else:
-            for i, key in enumerate(node.keys):
+            for key in node.keys:
                 if x <= key <= y:
                     keys.append(key)
 
@@ -328,7 +364,7 @@ class Tree():
             self.primesInRange(x, y, node.children[len(node.keys)], keys)
 
         else:
-            for i, key in enumerate(node.keys):
+            for key in node.keys:
                 if x <= key <= y and self._is_prime(key):
                     keys.append(key)
 
