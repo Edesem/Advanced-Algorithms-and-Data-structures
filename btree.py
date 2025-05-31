@@ -115,6 +115,10 @@ class Tree():
             self.split(parent)
 
     def search(self, key):
+        if key not in self.set:
+            print(f"Key {key} not found in tree.")
+            return None
+
         if self.root is None:
             print(f"Key ({key}) does not exist - empty tree")
             return None
@@ -126,10 +130,6 @@ class Tree():
                     node = node.children[i]
                     break
             else:
-                if len(node.children) == 0:
-                    print(f"Key ({key}) does not exist")
-                    return None
-                
                 node = node.children[-1]
 
         index = node.keys.index(key)
