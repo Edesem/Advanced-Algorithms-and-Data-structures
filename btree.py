@@ -304,8 +304,36 @@ class Tree():
             return -1
         return keys
 
-    def primesInRange(self, x, y, node=None):
-        pass
+    def primesInRange(self, x, y, node=None, keys=None):
+        # Uses in order tree traversal as basis
+        if keys == None:
+            keys = []
+ 
+        if node == None:
+            node = self.root
+
+        if not node.is_leaf():
+            for i, key in enumerate(node.keys):
+                # Traverse left
+                if x < key:
+                    self.keysInRange(x, y, node.children[i], keys)
+                    
+                # Visit
+                if x <= key <= y:
+                    keys.append(key)
+
+            # Traverse right-most branch
+            self.keysInRange(x, y, node.children[len(node.keys)], keys)
+
+        else:
+            for i, key in enumerate(node.keys):
+                if x <= key <= y:
+                    keys.append(key)
+
+        # None found
+        if len(keys) == 0:
+            return -1
+        return keys
 
 def main():    
     t = Tree(3)
