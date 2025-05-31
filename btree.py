@@ -282,22 +282,27 @@ class Tree():
         if not node.is_leaf():
             for i, key in enumerate(node.keys):
                 # Go left
-                self.select(k, node.children[i], counter)
-                counter[0] += 1
+                res = self.select(k, node.children[i], counter)
+                if res != -1:
+                    return res
 
+                # Visit
                 if counter[0] == k:
                     return key
+                
+                counter[0] += 1
 
             # Traverse right-most branch
             self.select(k, node.children[len(node.keys)], counter)
-            counter[0] += 1
+            if res != -1:
+                return res
 
         else:
             for key in node.keys:
                 # Visit
-                counter[0] += 1
                 if counter[0] == k:
                     return key
+                counter[0] += 1
 
         return -1
 
