@@ -33,6 +33,7 @@ class Tree():
         self.count = 0
         self.max = (t * 2) - 1
         self.min = t - 1
+        self.t = t
         self.set = set()
         
     def insert(self, key, node=None):
@@ -173,12 +174,12 @@ class Tree():
                 right_child = node.children[index + 1]
 
                 # Case 2a, borrow from the predecessor
-                if len(left_child.keys) >= self.min + 1:
+                if len(left_child.keys) >= self.t:
                     predecessor = self._get_predecessor(left_child)
                     node.keys[index] = predecessor
                     self.delete(predecessor, left_child)
                 # Case 2b, borrow from sucessor
-                elif len(right_child.keys) >= self.min + 1:
+                elif len(right_child.keys) >= self.t:
                     successor = self._get_successor(right_child)
                     node.keys[index] = successor
                     self.delete(successor, right_child)
