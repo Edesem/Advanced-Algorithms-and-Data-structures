@@ -299,7 +299,7 @@ class Tree():
                 if counter[0] == k:
                     return key
 
-        return key
+        return -1
 
     def rank(self, x, node=None, rank=None):
         # If key not in tree
