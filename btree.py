@@ -153,7 +153,6 @@ class Tree():
                     node.delete(index)
                 # Case 3a
                 else:
-                    print(f"Deleting {node.keys}")
                     parent = node.parent
                     i = 0
                     while i < len(parent.children) and parent.children[i] != node:
