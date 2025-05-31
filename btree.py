@@ -271,11 +271,12 @@ class Tree():
                 self.print_tree(child, indent + ("    " if is_last else "│   "), is_last_child)
 
     def select(self, k, node=None, counter=None):        
+        # Uses in order tree traversal as basis
+
         if counter == None:
             # So it is mutable and persists during recursion
             counter = [1]
         
-        # Uses in order tree traversal as basis
         if node == None:
             node = self.root
 
@@ -307,6 +308,8 @@ class Tree():
         return -1
 
     def rank(self, x, node=None, rank=None):
+        # Uses in order tree traversal as basis
+
         # If key not in tree
         if x not in self.set: 
             return -1
@@ -315,7 +318,6 @@ class Tree():
             # So it is mutable and persists during recursion
             rank = [0]
         
-        # Uses in order tree traversal as basis
         if node == None:
             node = self.root
 
@@ -347,6 +349,7 @@ class Tree():
 
     def keysInRange(self, x, y, node=None, keys=None):
         # Uses in order tree traversal as basis
+
         if keys == None:
             keys = []
  
@@ -378,6 +381,7 @@ class Tree():
 
     def primesInRange(self, x, y, node=None, keys=None):
         # Uses in order tree traversal as basis
+        
         if keys == None:
             keys = []
  
