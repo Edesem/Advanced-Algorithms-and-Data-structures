@@ -7,7 +7,6 @@ class Node():
         else:
             self.keys = [key]
         self.children = []
-        self.parent = None
 
     def insert(self, key):
         # Binary search to find insertion index
@@ -76,7 +75,6 @@ class Tree():
     # Split specified node up
     def _split(self, node):
         keys = node.keys
-        keys.sort()
 
         median_index = len(keys) // 2
         median = keys[median_index]
@@ -296,7 +294,6 @@ class Tree():
                 # Visit
                 if counter[0] == k:
                     return key
-                
                 counter[0] += 1
 
             # Traverse right-most branch
