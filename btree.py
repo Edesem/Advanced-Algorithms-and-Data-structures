@@ -118,6 +118,7 @@ class Tree():
             self._split(parent)
 
     def search(self, key):
+        # Binary search
         if key not in self.set:
             print(f"Key {key} not found in tree.")
             return None
@@ -194,6 +195,8 @@ class Tree():
             
     def _fix_child_if_needed(self, parent, i):
         child = parent.children[i]
+
+        # If key is at t or less than t then fix the node before descending
         if child.get_length() <= self.min:
             print(child.keys)
             left_sibling = parent.children[i - 1] if i > 0 else None
@@ -226,11 +229,13 @@ class Tree():
         return i
 
     def _get_predecessor(self, node):
+        # Get the preceeding value
         while not node.is_leaf():
             node = node.children[-1]
         return node.keys[-1]
     
     def _get_successor(self, node):
+        # Get the succeeding value
         while not node.is_leaf():
             node = node.children[0]
         return node.keys[0]
@@ -256,6 +261,7 @@ class Tree():
             self.root.parent = None
 
     def print_tree(self, node=None, indent="", is_last=True):
+        # Tree visualiser
         if node is None:
             node = self.root
         if node is None:
@@ -305,6 +311,7 @@ class Tree():
                     return key
                 counter[0] += 1
 
+        # If trying to select 0th or kth where k > number of nodes then return -1
         return -1
 
     def rank(self, x, node=None, rank=None):
@@ -370,6 +377,7 @@ class Tree():
             self.keysInRange(x, y, node.children[len(node.keys)], keys)
 
         else:
+            # Visit
             for key in node.keys:
                 if x <= key <= y:
                     keys.append(key)
@@ -402,6 +410,7 @@ class Tree():
             self.primesInRange(x, y, node.children[len(node.keys)], keys)
 
         else:
+            # Visit
             for key in node.keys:
                 if x <= key <= y and self._is_prime(key):
                     keys.append(key)
