@@ -334,11 +334,10 @@ class Tree():
                 self.rank(x, node.children[i], rank)
 
                 # Visit
-                if key < x:
+                if key <= x:
                     rank[0] += 1
-                elif key == x:
-                    rank[0] += 1
-                    return rank[0]
+                    if key == x:
+                        return rank[0]
 
             # Traverse right-most branch
             self.rank(x, node.children[len(node.keys)], rank)
