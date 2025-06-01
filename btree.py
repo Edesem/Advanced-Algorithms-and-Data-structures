@@ -345,11 +345,10 @@ class Tree():
         else:
             for key in node.keys:
                 # Visit
-                if key < x:
+                if key <= x:
                     rank[0] += 1
-                elif key == x:
-                    rank[0] += 1
-                    return rank[0]
+                    if key == x:
+                        return rank[0]
 
         return rank[0]
 
