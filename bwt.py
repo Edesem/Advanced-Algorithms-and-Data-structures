@@ -1,3 +1,6 @@
+import time
+
+
 def bwt_array(s):
     bwt = []
     
@@ -43,9 +46,29 @@ def bwt_invert(bwt):
     
     # Start at $
     str=""
-    for i in range(len(k)):
-        if k[i][0] == "$":
-            str = sorted_k[i][0]
+    last_char = "$"
+    last_rank = 1
+    while len(str) < len(k):
+        print(len(str) != len(k))
+        for i in range(len(k)):
+            sorted_char = sorted_k[i][0]
+            char = k[i][0]
+            sorted_rank = sorted_k[i][1]
+            rank = k[i][1]
+
+            if char == last_char and rank == last_rank:
+                str += sorted_char
+                last_char = sorted_char
+                last_rank = sorted_rank
+                break
+
+            print(str)   
+            time.sleep(0.01)
+             
+    print(str)
+        
+
+
         
     
 
