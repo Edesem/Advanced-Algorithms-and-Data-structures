@@ -39,6 +39,19 @@ def bwt_invert(bwt):
     
     for i in range(len(last_col)):
         print(first_col[i], last_col[i])
+
+    lf_map = [first_col.index(pair) for pair in last_col]
+    print(lf_map)
+
+    # Position of $
+    i = len(lf_map) - 1
+    reconstructed = ""
+    for _ in range(len(lf_map)):
+        char, _ = last_col[i]
+        reconstructed = char + reconstructed
+        i = lf_map[i]
+
+    print(reconstructed)
     
     # Start at $
     str=""
