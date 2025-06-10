@@ -1,6 +1,3 @@
-import time
-
-
 def bwt_array(s):
     bwt = []
     
@@ -34,46 +31,33 @@ def bwt_invert(bwt):
 
         return ranked
     
-    k = bwt_key(bwt)
-
-    k = char_rank(k)
-    #sorted_k = "".join(sorted(k))
-    sorted_k = sorted(k, key=lambda x: x[0])  # Sort by rank (second element)
+    last_col = bwt_key(bwt)
     
-    for i in range(len(k)):
-        print(sorted_k[i], k[i])
-
+    last_col = char_rank(last_col)
+    #sorted_k = "".join(sorted(k))
+    first_col = sorted(last_col, key=lambda x: x[0])  # Sort by rank (second element)
+    
+    for i in range(len(last_col)):
+        print(first_col[i], last_col[i])
     
     # Start at $
     str=""
-    last_char = "$"
-    last_rank = 1
-    while len(str) < len(k):
-        print(len(str) != len(k))
-        for i in range(len(k)):
-            sorted_char = sorted_k[i][0]
-            char = k[i][0]
-            sorted_rank = sorted_k[i][1]
-            rank = k[i][1]
+    previous_char = "$"
+    previous_rank = 1
+    while len(str) < len(last_col):
+        for i in range(len(last_col)):
+            first_char, first_rank = first_col[i]
+            last_char, last_rank = last_col[i]
 
-            if char == last_char and rank == last_rank:
-                str += sorted_char
-                last_char = sorted_char
-                last_rank = sorted_rank
+
+            if last_char == previous_char and last_rank == previous_rank:
+                str += first_char
+                previous_char = first_char
+                previous_rank = first_rank
                 break
 
-            print(str)   
-            time.sleep(0.01)
-             
     print(str)
         
-
-
-        
-    
-
-
-
 
 s1 = "wooloomooloo$"
 s2 = "olba$luaolh"
